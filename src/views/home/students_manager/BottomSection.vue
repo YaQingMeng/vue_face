@@ -1,6 +1,6 @@
 <template>
   <div class="Bottom-section-content">
-    <el-table :data="paginatedStudents" stripe style="width: 100%">
+    <el-table :data="paginatedStudents" stripe style="width: 97.5%;">
       <el-table-column prop="name" label="姓名" width="180" />
       <el-table-column prop="age" label="年龄" width="180" />
       <el-table-column prop="class" label="班级" />
@@ -86,6 +86,9 @@ export default {
       ],
       pageSize: 8, // 每页显示的学生数
       currentPage: 1, // 当前页码
+      dialogVisible: true, // 对话框是否可见
+      editForm: { name: '', age: null, class: '' }, // 编辑表单数据
+      editIndex: null, // 当前编辑的学生索引
     };
   },
   computed: {
@@ -103,6 +106,7 @@ export default {
     },
     // 编辑按钮点击处理函数
     handleEditClick(student) {
+      console.log(student);
       this.editIndex = this.students.indexOf(student);
       this.editForm = { ...student }; // 创建学生信息的副本
       this.dialogVisible = true;
@@ -126,9 +130,10 @@ export default {
 
 
 <style>  
-  /* .Bottom-section-content {  
-    padding: 20px;  
-    border: 1px solid #ccc;  
-    border-radius: 0 0 8px 8px;  
-  }   */
+  .Bottom-section-content {  
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+  }  
 </style>

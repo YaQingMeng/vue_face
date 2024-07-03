@@ -1,68 +1,91 @@
-<template>  
-  <div class="gallery">  
-    <button @click="prevPage" :disabled="currentPage <= 1">上一页</button>  
-    <div class="gallery-images">  
-      <img  
-        v-for="(image, index) in currentPageImages"  
-        :key="index"  
-        :src="image.src"  
-        :alt="image.alt"  
-      />  
-    </div>  
-    <button @click="nextPage" :disabled="currentPage >= totalPages">下一页</button>  
-  </div>  
-</template>  
+<template>
+  <div class="gallery">
+    <div class="gallery-images">
+      <div v-for="(image, index) in currentPageImages" :key="index" class="image-container">
+        <img :src="image.src" :alt="image.alt" />
+        <p class="image-name">{{ image.alt }}</p>
+      </div>
+    </div>
+    <el-pagination
+      style="margin-top: 20px;"
+      background
+      layout="prev, pager, next"
+      :current-page="currentPage"
+      @current-change="handlePageChange"
+      :page-size="imagesPerPage"
+      :total="images.length"
+    />
+  </div>
+</template>
+
   
-<script>  
-export default {  
-  name: 'ImageGallery',  
-  data() {  
-    return {  
-      images: [  
-        // 假设这里有很多图片对象  
-        { src: "@/assets/img/tree.png", alt: 'Image 1' },  
-        { src: '@/assets/img/tree.png', alt: 'Image 2' },  
-        // ...更多图片  
-      ],  
-      currentPage: 1,  
-      imagesPerPage: 5, // 每页显示的图片数量  
-    };  
-  },  
-  computed: {  
-    totalPages() {  
-      return Math.ceil(this.images.length / this.imagesPerPage);  
-    },  
-    currentPageImages() {  
-      const start = (this.currentPage - 1) * this.imagesPerPage;  
-      const end = start + this.imagesPerPage;  
-      return this.images.slice(start, end);  
-    },  
-  },  
-  methods: {  
-    nextPage() {  
-      if (this.currentPage < this.totalPages) {  
-        this.currentPage++;  
-      }  
-    },  
-    prevPage() {  
-      if (this.currentPage > 1) {  
-        this.currentPage--;  
-      }  
-    },  
-  },  
-};  
-</script>  
+<script>
+  export default {
+    name: 'ImageGallery',
+    data() {
+      return {
+        images: [
+          { src: require('@/assets/images/image1.jpg'), alt: 'Image 1' },
+          { src: require('@/assets/images/image1.jpg'), alt: 'Image 2' },
+          { src: require('@/assets/images/image1.jpg'), alt: 'Image 3' },
+          { src: require('@/assets/images/image1.jpg'), alt: 'Image 4' },
+          { src: require('@/assets/images/image1.jpg'), alt: 'Image 5' },
+          { src: require('@/assets/images/image1.jpg'), alt: 'Image 6' },
+          { src: require('@/assets/images/image1.jpg'), alt: 'Image 7' },
+          { src: require('@/assets/images/image1.jpg'), alt: 'Image 8' },
+          { src: require('@/assets/images/image1.jpg'), alt: 'Image 9' },
+          { src: require('@/assets/images/image1.jpg'), alt: 'Image 10' },
+          { src: require('@/assets/images/image1.jpg'), alt: 'Image 11' },
+        ],
+        currentPage: 1,
+        imagesPerPage: 10, // 每页显示的图片数量
+      };
+    },
+    computed: {
+      totalPages() {
+        return Math.ceil(this.images.length / this.imagesPerPage);
+      },
+      currentPageImages() {
+        const start = (this.currentPage - 1) * this.imagesPerPage;
+        const end = start + this.imagesPerPage;
+        return this.images.slice(start, end);
+      },
+    },
+    methods: {
+      handlePageChange(page) {
+        this.currentPage = page;
+      },
+    },
+  };
+</script>
   
-<style scoped>  
-.gallery {  
-  display: flex;  
-  flex-direction: column;  
-  align-items: center;  
-}  
   
-.gallery-images img {  
-  margin: 10px;  
-  width: 200px; /* 或其他你想要的尺寸 */  
-  height: auto;  
-}  
-</style>
+<style scoped>
+  .gallery {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .gallery-images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .image-container {
+    margin: 10px;
+    text-align: center;
+  }
+  
+  .image-container img {
+    width: 200px; /* 或其他你想要的尺寸 */
+    height: auto;
+  }
+  
+  .image-name {
+    margin-top: 5px;
+    font-size: 14px; /* 你可以根据需要调整字体大小 */
+    color: #333; /* 你可以根据需要调整颜色 */
+  }
+  </style>

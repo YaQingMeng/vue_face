@@ -89,7 +89,7 @@ export default {
   
 /* 底部区域样式，固定高度，背景色较浅 */  
 .bottom-section {  
-  flex: 0 0 auto;  
+  
   background-color: #ecf5ff;  
   /* 添加圆角，使底部看起来更圆润 */  
   border-radius: 0 0 8px 8px;  
