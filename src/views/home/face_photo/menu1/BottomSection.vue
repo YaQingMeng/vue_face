@@ -38,7 +38,7 @@
           { src: require('@/assets/images/image1.jpg'), alt: 'Image 11' },
         ],
         currentPage: 1,
-        imagesPerPage: 10, // 每页显示的图片数量
+        imagesPerPage: 8, // 每页显示的图片数量
       };
     },
     computed: {

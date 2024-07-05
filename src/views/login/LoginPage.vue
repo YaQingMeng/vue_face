@@ -1,29 +1,32 @@
-<template>
-  <div class="login-container">
-    <h1>登录</h1>
-    <form @submit.prevent="handleLogin">
-      <div class="form-group">
-        <label for="username">用户名</label>
-        <input
-          type="text"
-          id="username"
-          v-model="username"
-          placeholder="请输入用户名"
-        />
-      </div>
-      <div class="form-group">
-        <label for="password">密码</label>
-        <input
-          type="password"
-          id="password"
-          v-model="password"
-          placeholder="请输入密码"
-        />
-      </div>
-      <button type="submit">登录</button>
-      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-    </form>
-  </div>
+<template>  
+  <div class="fullscreen-container">  
+    <div class="login-container">  
+      <h1>登录</h1>  
+      <form @submit.prevent="handleLogin">  
+        <div class="form-group">  
+          <label for="username">用户名</label>  
+          <input  
+            type="text"  
+            id="username"  
+            v-model="username"  
+            placeholder="请输入用户名"  
+          />  
+        </div>  
+        <div class="form-group">  
+          <label for="password">密码</label>  
+          <input  
+            type="password"  
+            id="password"  
+            v-model="password"  
+            placeholder="请输入密码"  
+          />  
+        </div>  
+        <button type="submit">登录</button>  
+        <button @click="handleRegister">注册</button>  
+        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>  
+      </form>  
+    </div>  
+  </div>  
 </template>
 
 <script>
@@ -59,69 +62,78 @@ export default {
         this.errorMessage = '登录失败，请稍后再试';
       }
     },
+    handleRegister() {  
+      // 跳转到注册页面  
+      this.$router.push('/signup'); // 注册页面的路由是 '/signup'  
+    },
   },
 };
 </script>
 
+
+
 <style scoped>
-  .login-container {
-    max-width: 400px;
-    margin: 200px auto;  /* 增加了垂直方向的外边距来向下移动 */
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    
-  }
+/* 全屏背景覆盖层 */  
+.fullscreen-container {  
+  position: fixed;  
+  top: 0;  
+  left: 0;  
+  width: 100%;  
+  height: 100%;  
+  display: flex;  
+  justify-content: center;  
+  align-items: center;  
+  z-index: 1000; /* 确保覆盖在其他内容之上 */  
+  background-image: url('/public/login.jpg');
+  background-size: cover;
+  background-position: center;
+}  
   
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
+/* 登录容器样式 */  
+.login-container {  
+  background-color: #fff;  
+  padding: 20px;  
+  border-radius: 10px;  
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  
+  width: 400px; /* 根据需要调整宽度 */  
+  text-align: center;  
+}  
   
-  .form-group {
-    max-width: 400px;
-    width: 95%;  /* 修改输入框宽度为 80% */
-    margin-bottom: 20px; /* 增加了表单项之间的间距 */
-    padding: 10px; /* 增加了内边距 */
-    border-radius: 5px; /* 添加了圆角 */
-    background-color: #f9f9f9; /* 添加了背景色 */
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* 添加了阴影效果 */
-  }
+.form-group {  
+  margin-bottom: 15px;  
+}  
   
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
+.form-group label {  
+  display: block;  
+  margin-bottom: 5px;  
+}  
   
-  input {
-    width: 95%;
-    padding: 10px;
-    border-radius: 3px;
-    border: 1px solid #ddd;
-  }
+.form-group input {  
+  width: calc(100% - 22px); /* 减去padding和border的宽度 */  
+  padding: 10px;  
+  border: 1px solid #ccc;  
+  border-radius: 5px;  
+}  
   
-  button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 3px;
-    background-color: #007bff;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-  }
+button {  
+  padding: 10px 20px;  
+  margin-top: 10px;  
+  border: none;  
+  border-radius: 5px;  
+  cursor: pointer;  
+}  
   
-  button:hover {
-    background-color: #0056b3;
-  }
+button[type="submit"] {  
+  background-color: #62b3f1; 
+  margin-right: 10%;
+  color: white;  
+}  
+
   
-  .error-message {
-    color: red;
-    text-align: center;
-    margin-top: 10px;
-  }
+.error-message {  
+  color: red;  
+  margin-top: 10px;  
+}
   </style>
   
 

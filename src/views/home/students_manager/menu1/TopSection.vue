@@ -41,7 +41,7 @@ export default {
 };  
 </script> 
 
-<style>  
+<style scoped>  
   .top-section-content {  
     display: flex;  
     flex-direction: column; /* 默认是列布局，但这里主要用于包裹整个内容 */  

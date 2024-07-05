@@ -129,7 +129,7 @@ export default {
 
 
 
-<style>  
+<style scoped>  
   .Bottom-section-content {  
     margin-top: 10px;
     display: flex;

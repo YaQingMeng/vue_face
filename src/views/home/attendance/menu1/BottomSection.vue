@@ -10,7 +10,7 @@
   };
   </script>
   
-  <style>
+  <style scoped>
   .top-section-content {
     padding: 20px;
   }

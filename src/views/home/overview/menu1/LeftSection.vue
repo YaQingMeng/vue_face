@@ -34,7 +34,7 @@
   };  
 </script>
 
-<style>
+<style scoped>
 .left-section-content {
   padding: 20px;
 }
