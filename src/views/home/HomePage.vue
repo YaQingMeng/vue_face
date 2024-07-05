@@ -1,14 +1,19 @@
 <template>
   <el-container class="home-container">
+
     <el-header class="header">
       <div class="header-content">
         <h1>管理员管理系统</h1>
       </div>
     </el-header>
-    <el-container>
-      <el-aside class="sidebar">
-        <h2>管理员管理系统</h2>
+    
+    <el-container class="main-container">
+
+      <el-aside class="aside-container">
+        <el-container class="sidebar">
+          
         <ul class="nav-list">
+
           <li @click="toggleMainMenu" :class="{ active: isMainMenuActive }">
             <el-icon><House /></el-icon> 主页
           </li>
@@ -41,7 +46,7 @@
               <el-icon><Camera /></el-icon> 人脸数据
             </li>
             <li @click="activeTab = 'FaceDashboard'" :class="{ active: activeTab === 'FaceDashboard' }">
-              <el-icon><Camera /></el-icon> 控制台
+              <el-icon><Camera /></el-icon> 上传人脸
             </li>
           </ul>
 
@@ -69,7 +74,10 @@
             </li>
           </ul>
         </ul>
+
+        </el-container>
       </el-aside>
+
       <el-main class="main-content">
         <Overview v-if="activeTab === 'Overview'" />
         <Dashboard v-if="activeTab === 'Dashboard'" />
@@ -82,7 +90,9 @@
         <Setting v-if="activeTab === 'Setting'" />
         <SettingDashboard v-if="activeTab === 'SettingDashboard'" />
       </el-main>
+
     </el-container>
+
   </el-container>
 </template>
 
@@ -140,50 +150,64 @@ export default {
 <style scoped>
   .home-container {
     display: flex;
-    height: 100vh; 
   }
   
+  /*顶部显示*/
   .header {
-  background-color: #1976d2; /* 深蓝色 */
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  border-radius: 10px 10px 0 0; /* 顶部圆角 */
-}
-  
-  .sidebar {
-    width: 250px;
-    background-color: #ecf5ff;
+    display: flex;
+    background-color: #1976d2;
+    color: white;
+    justify-content: center;
+    align-items: center; 
     padding: 20px;
     border-radius: 10px;
-    border: 1px solid #ccc; 
-    height: 93%;   
-    margin-top: 10px;
   }
-  
-  .sidebar h2 {
-    margin-bottom: 20px;
-    text-align: center;
-    color: #333333;
-    font-family: 'Arial', sans-serif;
-    font-size: 1.5em;
-    letter-spacing: 1px;
+
+  .main-container {
+    display: flex;
+    /* border: solid #ff0000; */
+  }
+
+  /* 左侧导航栏宽度 */
+  .aside-container{
+    display: flex;
+    
+    padding: 10px;
+    /* border: solid #ff0000; */
+  }
+
+  /* 右侧内容宽度 自动为剩下的区域 调试用 */
+  .main-content{
+    padding: 10px;
+    /* border: solid #ff0000; */
+  }
+
+  /* 左侧导航栏具体样式设置 */
+  .sidebar {
+
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+    border: 1px solid #ccc;  
+    /* border: solid #ff0000; */
+
   }
   
   .nav-list {
-    /* list-style: none; */
-    padding: 0;
-    margin: 10px;
+    flex: 1 1 auto;
+    /* border: solid #ff0000; */
+    list-style: none;
+
   }
   
   .nav-list li {
+    flex: 1 1;
     padding: 10px;
     cursor: pointer;
     margin-bottom: 20px;
+    margin-left: -30px;
+    margin-right: 10px;
     background-color: #d9ecff;
-    border-radius: 8px;
+    border-radius: 10px;
     transition: background-color 0.3s ease;
   }
   
@@ -196,10 +220,5 @@ export default {
     color: #fff;
   }
   
-  .main-content {
-  flex: 1;
-  padding: 20px;
-  background-color: #fff;
 
-}
-  </style>
+</style>

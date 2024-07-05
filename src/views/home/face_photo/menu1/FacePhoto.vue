@@ -22,6 +22,7 @@ export default {
 <style scoped>   
   .face-container {  
     display: flex;  
+    flex: 0 1 auto;
     flex-direction: column;  
     height: 95%;  
     padding: 20px;  
@@ -32,7 +33,7 @@ export default {
   }  
     
   .top-section {  
-    flex: 1 1 auto;
+    flex: 0 1 auto;
     background-color: #f5f5f5;  
     border-radius: 8px 8px 0 0;  
     padding: 20px;  
