@@ -20,36 +20,32 @@ export default {
 </script>
 
 <style scoped>  
-  .student-container {  
-    display: flex;  
+  .student-container { 
+    display: flex; 
+    flex:1 1 auto;
     flex-direction: column;  
-    height: 95%;  
-    padding: 20px;  
-    border: 1px solid #ccc;  
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);  
-    margin-top: -10px; 
+    /* border: solid #ff0000; */
   }  
 
-  .top-section {  
-    flex: 1 0 auto;
-    background-color: #f5f5f5;  
-    border-radius: 8px 8px 0 0;  
-    padding: 20px;  
-    padding: 20px;  
+  .top-section {
+    display: flex;
+    flex:0 0 auto;
+    height: 150px;
+    background-color: #f5f5f5;    
     border: 1px solid #ccc;  
-    border-radius: 8px;
-    margin-bottom: 20px;
-  }   
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    /* border: solid #ff0000; */
+  }
     
   .bottom-section {  
-    background-color: #f5f5f5;  
-    border-radius: 0 0 8px 8px;  
-    padding: 20px;  
-    height: 65%;
-    border-top: 1px solid #ddd;  
-    padding: 20px;  
+    display: flex;
+    flex:1 0 auto;
+    background-color: #f5f5f5;    
     border: 1px solid #ccc;  
-    border-radius: 8px;
+    border-radius: 10px;
+    padding: 10px;
+    /* border: solid #ff0000; */
   }  
 </style>

@@ -13,7 +13,7 @@
       </el-table-column>
     </el-table>
     <el-pagination
-      style="margin-top: 20px;"
+      style="margin-top: 10px;"
       background
       layout="prev, pager, next"
       :current-page="currentPage"
@@ -130,10 +130,12 @@ export default {
 
 
 <style scoped>  
-  .Bottom-section-content {  
-    margin-top: 10px;
+  .Bottom-section-content {
     display: flex;
+    flex:1 1 auto;
     flex-direction: column;
+    justify-content: center;
     align-items: center; 
+    border: solid #ff0000;
   }  
 </style>

@@ -12,7 +12,7 @@
   
   <style scoped>
   .top-section-content {
-    padding: 20px;
+    border: solid #ff0000; 
   }
   </style>
   

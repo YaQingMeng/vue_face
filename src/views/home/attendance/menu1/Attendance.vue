@@ -27,51 +27,52 @@ export default {
 
 <style scoped>
 .overview-container {  
-  display: flex;    
-  flex-direction: column;    
-  height: 95%;    
-  padding: 20px;    
-  border: 1px solid #ccc;    
-  border-radius: 8px;  
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);    
-  margin-top: -10px;  
+  display: flex;
+  flex:1 1 auto;  
+  flex-direction: column;  
+  /* border: solid #ff0000;   */
 }
   
 .middle-section {    
   display: flex;    
-  flex: 1 1 auto;    
-  margin-top: 20px;    
+  flex:0 0 auto;
+  height: 150px;
+  margin-bottom: 10px;
+  /* border: solid #ff0000;  */
 }    
-    
-.left-section{     
-  flex: 1 1 auto;
-  background-color: #ecf5ff;    
-  border-radius: 8px;    
-  padding: 20px; /* 调整为一致，或根据需要调整 */  
+
+.left-section{
+  display: flex;
+  flex: 0 1 auto;
+  background-color: #f5f5f5;     
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);    
-  margin-top: -10px;
-  margin-right: 20px;
-  border: 1px solid #ccc;  
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  /* border: solid #ff0000;  */
 }    
   
-.right-section {     
+.right-section {
+  display: flex;  
   flex: 1 1 auto;  
-  background-color: #ecf5ff;    
-  border-radius: 8px;    
-  padding: 20px; /* 调整为一致，或根据需要调整 */  
+  background-color: #f5f5f5;     
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);    
-  border: 1px solid #ccc;  
-  margin-top: -10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  /* border: solid #ff0000;  */
 }   
   
-.bottom-section {    
+.bottom-section {
+  display: flex;  
   flex: 1 1 auto;
-  background-color: #ecf5ff;    
-  border-radius: 8px;    
+  background-color: #f5f5f5;    
+  border-radius: 10px;    
   padding: 10px;    
-  margin-top: 20px;     
   border: 1px solid #ccc;  
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);    
+  /* border: solid #ff0000;  */
 }  
 
 </style>

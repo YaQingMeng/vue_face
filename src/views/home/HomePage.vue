@@ -58,7 +58,7 @@
               <el-icon><Document /></el-icon> 考勤数据
             </li>
             <li @click="activeTab = 'AttendanceDashboard'" :class="{ active: activeTab === 'AttendanceDashboard' }">
-              <el-icon><Document /></el-icon> 控制台
+              <el-icon><Document /></el-icon> 异常考勤记录
             </li>
           </ul>
 
@@ -102,9 +102,9 @@ import Dashboard from './overview/menu2/Dashboard.vue'; // 添加Dashboard组件
 import StudentInfo from './students_manager/menu1/StudentInfo.vue';
 import StudentDashboard from './students_manager/menu2/Dashboard.vue'; 
 import Attendance from './attendance/menu1/Attendance.vue';
-import AttendanceDashboard from './attendance/menu2/Dashboard.vue'; 
+import AttendanceDashboard from './attendance/menu2/ExceptionRecord.vue'; 
 import FacePhoto from './face_photo/menu1/FacePhoto.vue';
-import FaceDashboard from './face_photo/menu2/Dashboard.vue'; 
+import FaceDashboard from './face_photo/menu2/UploadPhoto.vue'; 
 import Setting from './setting/menu1/Setting.vue';
 import SettingDashboard from './setting/menu2/Dashboard.vue'; 
 
@@ -149,54 +149,54 @@ export default {
 
 <style scoped>
   .home-container {
-    display: flex;
+    flex: auto;
+    
   }
   
   /*顶部显示*/
   .header {
     display: flex;
-    background-color: #1976d2;
+    background-color: #3f72af;
     color: white;
     justify-content: center;
     align-items: center; 
-    padding: 20px;
+    padding: 10px;
     border-radius: 10px;
   }
 
   .main-container {
     display: flex;
+    /* 下方容器固定高度 */
+    height: 93vh;
     /* border: solid #ff0000; */
   }
 
   /* 左侧导航栏宽度 */
   .aside-container{
     display: flex;
-    
     padding: 10px;
-    /* border: solid #ff0000; */
+    border: solid #ff0000;
   }
 
   /* 右侧内容宽度 自动为剩下的区域 调试用 */
   .main-content{
+    display: flex;
     padding: 10px;
-    /* border: solid #ff0000; */
+    border: solid #ff0000;
   }
 
   /* 左侧导航栏具体样式设置 */
   .sidebar {
-
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
     border: 1px solid #ccc;  
     /* border: solid #ff0000; */
-
   }
   
   .nav-list {
     flex: 1 1 auto;
-    /* border: solid #ff0000; */
     list-style: none;
-
+    /* border: solid #ff0000; */
   }
   
   .nav-list li {
@@ -206,7 +206,7 @@ export default {
     margin-bottom: 20px;
     margin-left: -30px;
     margin-right: 10px;
-    background-color: #d9ecff;
+    background-color: #dbe2ef;
     border-radius: 10px;
     transition: background-color 0.3s ease;
   }
@@ -216,7 +216,7 @@ export default {
   }
   
   .nav-list li.active {
-    background-color: #007bff;
+    background-color: #0f4c75;
     color: #fff;
   }
   

@@ -11,8 +11,6 @@
 
 <script>
 import TopSection from './TopSection.vue';
-// import LeftSection from './LeftSection.vue';
-// import RightSection from './RightSection.vue';
 import BottomSection from './BottomSection.vue';
 
 export default {
@@ -23,34 +21,28 @@ export default {
 
 <style scoped>
 .overview-container {
-  display: flex;  
+  display: flex;
+  flex:1 1 auto; 
   flex-direction: column;  
-  border-radius: 8px;
-  /* border: solid #ff0000; */
-
+  border: solid #ff0000;
 }  
-  
+
 .top-section {
-  border-radius: 8px;  
-  padding: 10px;  
+  flex: 1 1 auto; 
+  border-radius: 10px;   
   box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
   border: 1px solid #ccc;  
-}  
-  
-.middle-section {  
-  display: flex;  
-  flex: 1 1 auto;  
-  margin-top: 20px;  
-  
+  border: solid #ff0000;
 }  
   
 .bottom-section {  
   flex: 1 1 auto; 
   background-color: #ecf5ff;  
-  border-radius: 8px; 
-  padding: 10px;  
+  border-radius: 10px; 
+
   margin-top: 20px;  
   box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
   border: 1px solid #ccc;  
+  border: solid #ff0000;
 }
 </style>

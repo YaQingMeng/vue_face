@@ -7,7 +7,7 @@
       </div>
     </div>
     <el-pagination
-      style="margin-top: 20px;"
+      style="margin-top: 10px;"
       background
       layout="prev, pager, next"
       :current-page="currentPage"
@@ -63,8 +63,11 @@
 <style scoped>
   .gallery {
     display: flex;
+    flex:1 1 auto;
     flex-direction: column;
-    align-items: center;
+    justify-content: center;
+    align-items: center; 
+    border: solid #ff0000;
   }
   
   .gallery-images {
