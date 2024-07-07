@@ -36,11 +36,11 @@
               <el-icon><User /></el-icon> 学生信息
             </li>
             <li @click="menu.activeTab = 'StudentDashboard'" :class="{ active: menu.activeTab === 'StudentDashboard' }">
-              <el-icon><User /></el-icon> 上传
+              <el-icon><UploadFilled /></el-icon> 新增
             </li>
           </ul>
 
-          <li @click="toggleFacePhotoMenu" :class="{ active: menu.isFacePhotoMenuActive }">
+          <!-- <li @click="toggleFacePhotoMenu" :class="{ active: menu.isFacePhotoMenuActive }">
             <el-icon><Camera /></el-icon> 人脸数据
           </li>
           <ul v-if="menu.isFacePhotoMenuActive" class="sub-menu">
@@ -50,7 +50,7 @@
             <li @click="menu.activeTab = 'FaceDashboard'" :class="{ active: menu.activeTab === 'FaceDashboard' }">
               <el-icon><UploadFilled /></el-icon> 上传人脸
             </li>
-          </ul>
+          </ul> -->
 
           <li @click="toggleAttendanceMenu" :class="{ active: menu.isAttendanceMenuActive }">
             <el-icon><Document /></el-icon> 考勤数据
@@ -102,11 +102,11 @@
 import Overview from './overview/menu1/Overview.vue';
 import Dashboard from './overview/menu2/Dashboard.vue';
 import StudentInfo from './students_manager/menu1/StudentInfo.vue';
-import StudentDashboard from './students_manager/menu2/Dashboard.vue'; 
+import StudentDashboard from './students_manager/menu2/UploadImage.vue'; 
 import Attendance from './attendance/menu1/Attendance.vue';
 import AttendanceDashboard from './attendance/menu2/ExceptionRecord.vue'; 
-import FacePhoto from './face_photo/menu1/FacePhoto.vue';
-import FaceDashboard from './face_photo/menu2/UploadPhoto.vue'; 
+// import FacePhoto from './face_photo/menu1/FacePhoto.vue';
+// import FaceDashboard from './face_photo/menu2/UploadPhoto.vue'; 
 import Setting from './setting/menu1/Setting.vue';
 import SettingDashboard from './setting/menu2/Dashboard.vue'; 
 
@@ -116,7 +116,7 @@ export default {
     Overview, Dashboard, 
     StudentInfo, StudentDashboard, 
     Attendance, AttendanceDashboard, 
-    FacePhoto, FaceDashboard, 
+    // FacePhoto, FaceDashboard, 
     Setting, SettingDashboard 
   },
   data() {
@@ -125,7 +125,7 @@ export default {
         activeTab: 'Overview',
         isMainMenuActive: false, // 控制主页子菜单的显示与隐藏
         isStudentInfoMenuActive: false, // 控制学生信息子菜单的显示与隐藏
-        isFacePhotoMenuActive: false, // 控制人脸数据子菜单的显示与隐藏
+        // isFacePhotoMenuActive: false, // 控制人脸数据子菜单的显示与隐藏
         isAttendanceMenuActive: false, // 控制考勤数据子菜单的显示与隐藏
         isSettingMenuActive: false, // 控制设置子菜单的显示与隐藏
       },
@@ -144,9 +144,9 @@ export default {
     toggleStudentInfoMenu() {
       this.menu.isStudentInfoMenuActive = !this.menu.isStudentInfoMenuActive;
     },
-    toggleFacePhotoMenu() {
-      this.menu.isFacePhotoMenuActive = !this.menu.isFacePhotoMenuActive;
-    },
+    // toggleFacePhotoMenu() {
+    //   this.menu.isFacePhotoMenuActive = !this.menu.isFacePhotoMenuActive;
+    // },
     toggleAttendanceMenu() {
       this.menu.isAttendanceMenuActive = !this.menu.isAttendanceMenuActive;
     },

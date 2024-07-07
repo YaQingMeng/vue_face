@@ -1,5 +1,5 @@
 <template>
-  <div class="right-section-content">
+  <div class="left-section-content">
     <div class="charts-container">
       <div id="main" class="chart"></div>
       <div id="gauge" class="chart"></div>
@@ -11,7 +11,7 @@
 import * as echarts from 'echarts';
 
 export default {
-  name: 'BottomSection',
+  name: 'LeftSection',
   mounted() {
     // Line Chart
     var chartDom = document.getElementById('main');
@@ -119,7 +119,7 @@ export default {
 </script>
 
 <style>
-.right-section-content {
+.left-section-content {
   padding: 20px;
 }
 

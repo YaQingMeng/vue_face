@@ -157,38 +157,9 @@ export default {
         },
         series: [
           {
-            name: 'Radius Mode',
-            type: 'pie',
-            radius: [20, 140],
-            center: ['25%', '50%'],
-            roseType: 'radius',
-            itemStyle: {
-              borderRadius: 5
-            },
-            label: {
-              show: false
-            },
-            emphasis: {
-              label: {
-                show: true
-              }
-            },
-            data: [
-              { value: 40, name: 'rose 1' },
-              { value: 33, name: 'rose 2' },
-              { value: 28, name: 'rose 3' },
-              { value: 22, name: 'rose 4' },
-              { value: 20, name: 'rose 5' },
-              { value: 15, name: 'rose 6' },
-              { value: 12, name: 'rose 7' },
-              { value: 10, name: 'rose 8' }
-            ]
-          },
-          {
             name: 'Area Mode',
             type: 'pie',
             radius: [20, 140],
-            center: ['75%', '50%'],
             roseType: 'area',
             itemStyle: {
               borderRadius: 5
@@ -221,7 +192,6 @@ export default {
 }
 
 .chart1 {
-
   width: 550px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
   border: 1px solid #ccc;

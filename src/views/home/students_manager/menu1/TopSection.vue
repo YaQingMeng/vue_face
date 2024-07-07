@@ -46,7 +46,7 @@ export default {
 <style scoped>
 .top-section-content {
   flex: 1 1 auto;
-  border: solid #ff0000;
+  /* border: solid #ff0000; */
 }
 .search-bar {
   display: flex;
