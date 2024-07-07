@@ -2,9 +2,7 @@
   <el-container class="home-container">
 
     <el-header class="header">
-      <div class="header-content">
-        <h1>管理员管理系统</h1>
-      </div>
+      <h1>门禁管理系统</h1>
     </el-header>
     
     <el-container class="main-container">
@@ -17,12 +15,13 @@
           <li @click="toggleMainMenu" :class="{ active: isMainMenuActive }">
             <el-icon><House /></el-icon> 主页
           </li>
+          <!-- 交换了位置 -->
           <ul v-if="isMainMenuActive" class="sub-menu">
-            <li @click="activeTab = 'Overview'" :class="{ active: activeTab === 'Overview' }">
+            <li @click="activeTab = 'Dashboard'" :class="{ active: activeTab === 'Dashboard' }">
               <el-icon><House /></el-icon> 主页
             </li>
-            <li @click="activeTab = 'Dashboard'" :class="{ active: activeTab === 'Dashboard' }">
-              <el-icon><House /></el-icon> 控制台
+            <li @click="activeTab = 'Overview'" :class="{ active: activeTab === 'Overview' }">
+              <el-icon><Operation /></el-icon> 控制台
             </li>
           </ul>
 
@@ -46,7 +45,7 @@
               <el-icon><Camera /></el-icon> 人脸数据
             </li>
             <li @click="activeTab = 'FaceDashboard'" :class="{ active: activeTab === 'FaceDashboard' }">
-              <el-icon><Camera /></el-icon> 上传人脸
+              <el-icon><UploadFilled /></el-icon> 上传人脸
             </li>
           </ul>
 
@@ -97,8 +96,8 @@
 </template>
 
 <script>
-import Overview from './overview/menu1/Overview.vue';
-import Dashboard from './overview/menu2/Dashboard.vue'; // 添加Dashboard组件
+import Overview from './overview/menu2/Overview.vue';
+import Dashboard from './overview/menu1/Dashboard.vue'; // 交换了位置menu1和2
 import StudentInfo from './students_manager/menu1/StudentInfo.vue';
 import StudentDashboard from './students_manager/menu2/Dashboard.vue'; 
 import Attendance from './attendance/menu1/Attendance.vue';
@@ -119,7 +118,7 @@ export default {
   },
   data() {
     return {
-      activeTab: 'Overview',
+      activeTab: 'Dashboard',
       isMainMenuActive: false, // 控制主页子菜单的显示与隐藏
       isStudentInfoMenuActive: false, // 控制学生信息子菜单的显示与隐藏
       isFacePhotoMenuActive: false, // 控制人脸数据子菜单的显示与隐藏

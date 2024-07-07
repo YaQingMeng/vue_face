@@ -1,17 +1,138 @@
 <template>
-    <div class="top-section-content">
+  <div class="top-section-content">
+    <div class = "title">晚归记录</div>
+    <el-table :data="tableData" stripe class="full-width-table">
+      <el-table-column prop="date" label="时间" width="120" />
+      <el-table-column prop="name" label="姓名" width="120" />
+      <el-table-column prop="id" label="学号" width="160"/>
+      <el-table-column label="详情" width="180">
+        <template #default="scope">
+          <el-button type="primary" size="mini" @click="handleQuery(scope.row)">详情</el-button>
+          <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
 
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    name: 'RightSection',
-  };
-  </script>
-  
-  <style scoped>
-  .top-section-content {
-    padding: 20px;
-  }
-  </style>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[10, 15, 20]"
+      :page-size="pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="tableData.length"
+      class="pagination"
+    />
+
+    <!-- 查询信息的弹框 -->
+    <el-dialog
+      title="刷脸信息"
+      v-model = "dialogVisible"
+      width="30%"
+    >
+      <el-form :model="currentRecord">
+        <el-form-item label="时间">
+          <el-input v-model="currentRecord.date" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="姓名">
+          <el-input v-model="currentRecord.name" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="学号">
+          <el-input v-model="currentRecord.address" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="状态">
+          <el-input v-model="currentRecord.status" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="刷脸详情">
+          <el-input v-model="currentRecord.info" disabled></el-input>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="dialogVisible = false">关闭</el-button>
+        </div>
+      </template>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+import { defineComponent } from 'vue';
+import { ElMessage } from 'element-plus';
+
+export default defineComponent({
+  name: 'RightSection',
+  methods: {
+    handlePageChange(page) {
+      this.currentPage = page;
+    },
+    handleQuery(row) {
+      // 使用行数据来设置 currentRecord
+      this.currentRecord = { ...row, info: '固定刷脸详细信息' };
+      this.dialogVisible = true;
+    },
+    handleDelete(row) {
+      this.tableData = this.tableData.filter(item => item !== row);
+      ElMessage.success('记录已删除');
+    },
+  },
+  data() {
+    return {
+      tableData: [
+        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late'},
+        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late'},
+        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late'},
+        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late'},
+        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late'},
+        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late'},
+        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late'},
+        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late'},
+        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late'},
+        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late'},
+        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late'},
+        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late'},
+        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late'},
+        // More data here...
+      ],
+      currentPage: 1,
+      dialogVisible: false,
+      currentRecord: {
+        date: '',
+        name: '',
+        address: '',
+        status: '',
+        info: ''
+      },
+    };
+  },
+  computed: {
+    paginatedData() {
+      const start = (this.currentPage - 1) * this.pageSize;
+      const end = this.currentPage * this.pageSize;
+      return this.tableData.slice(start, end);
+    },
+  },
+});
+</script>
+
+<style scoped>
+.top-section-content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+.full-width-table {
+  width: 100%;
+}
+
+.pagination {
+  margin-top: 20px; /* 分页组件与表格之间的间距 */
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+</style>

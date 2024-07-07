@@ -1,5 +1,4 @@
 <template>
-
   <div class="middle-section">
     <div class="left-section">
       <LeftSection />
@@ -12,7 +11,7 @@
 </template>
 
 <script>
-import LeftSection from './ExceptionRecord.vue';
+import LeftSection from './IdentifyException.vue';
 import RightSection from './LateRecord.vue';
 
 export default {
@@ -24,12 +23,11 @@ export default {
 <style scoped>
   .middle-section {    
     display: flex;
-    flex:1 1 auto;  
-
+    flex:1 0 auto;  
     /* border: solid #ff0000;   */ 
   }    
     
-.left-section {     
+.left-section {
   display: flex;
   flex: 1 1 auto;
   background-color: #f5f5f5;     

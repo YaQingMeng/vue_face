@@ -1,78 +1,55 @@
-<template>  
-  <div class="top-section-content">  
+<template>
+  <div class="top-section-content">
+    <h3>学生信息查询</h3>
+    <div class="search-bar">
+      <el-input
+        placeholder="请输入学号或姓名进行搜索"
+        v-model="searchQuery"
+        prefix-icon="el-icon-search"
+        style="margin-right: 10px;"
+      />
+      <el-button type="primary" @click="handleSearch">查询</el-button>
+    </div>
+  </div>
+</template>
 
-    <form @submit.prevent="searchStudent" class="search-form">  
-      <div>  
-        <label for="searchInput">查询</label>  
-        <el-input v-model="searchQuery" style="width: 150px" placeholder="请输入学号/姓名"/>
-        <el-button type="primary" @click="searchStudent">Primary</el-button>
-      </div>  
-    </form>
+<script>
+import { ElNotification } from 'element-plus';
 
-    <div v-if="searchResult" class="search-result">  
-      <h4>查询结果:</h4>  
-      <p>{{ searchResult }}</p>  
-    </div>  
+export default {
+  name: 'RightSection',
+  data() {
+    return {
+      searchQuery: '',
+    };
+  },
+  methods: {
+    handleSearch() {
+      // 处理搜索逻辑，假设固定返回的结果是 "查询结果: 这是固定的结果"
+      const searchResult = '查询结果: 这是固定的结果';
 
-  </div>  
-</template>    
-  
-<script>  
-export default {  
-  name: 'TopSection',  
-  data() {  
-    return {  
-      searchQuery: '',  
-      searchResult: '暂未查询', // 用于存储查询结果  
-    };  
-  },  
-  methods: {  
-    searchStudent() {  
-      // 模拟查询结果  
-      // 在实际应用中，这里应该是调用API并处理响应的逻辑  
-      this.searchResult = '找到学生：张三（学号：123456）'; // 假设的查询结果  
-      // 如果需要更复杂的数据结构，可以将其设置为对象或数组  
-    },  
-  },  
-};  
-</script> 
+      // 弹出通知
+      ElNotification({
+        title: '搜索结果',
+        message: searchResult,
+        type: 'success',
+        duration: 3000, // 通知显示时长，单位为毫秒
+      });
 
-<style scoped>  
-  .top-section-content {
-    display: flex;
-    flex: 1 1 auto;
-    border: solid #ff0000;
-  }  
- 
-  .search-form {
-    display: flex;
-    flex: 0 1 auto; 
-    margin-right: 20px;
-    align-items: center;
-    /* border: 1px solid #ccc;
-    border-radius: 10px; */
-    border: solid #ff0000;
-  }  
-    
-  .search-form label {
-    flex: 1 1 auto;
-    font-weight: bold; /* 加粗标签文本 */
-  }  
+      console.log('搜索内容:', this.searchQuery);
+      console.log('搜索结果:', searchResult);
+    },
+  },
+};
+</script>
 
-  .search-form button{
-    flex: 1 1 auto;
-    margin-left: 10px;
-  }
-  
-  .search-result {
-    display: flex;
-    flex: 1 1 auto;
-    align-items: center;
-    border: solid #ff0000;
-  }  
-
-  .search-result h4{
-    margin-right: 10px;
-  }
-
+<style scoped>
+.top-section-content {
+  flex: 1 1 auto;
+  border: solid #ff0000;
+}
+.search-bar {
+  display: flex;
+  align-items: center;
+}
 </style>

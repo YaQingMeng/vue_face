@@ -28,10 +28,12 @@ export default {
 }  
 
 .top-section {
-  flex: 1 1 auto; 
-  border-radius: 10px;   
+  flex: 0 1 auto; 
+  border-radius: 10px;
+  margin-bottom: 10px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
-  border: 1px solid #ccc;  
+  border: 1px solid #ccc;
+  background-color: #f5f5f5; 
   border: solid #ff0000;
 }  
   
@@ -39,10 +41,9 @@ export default {
   flex: 1 1 auto; 
   background-color: #ecf5ff;  
   border-radius: 10px; 
-
-  margin-top: 20px;  
   box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
-  border: 1px solid #ccc;  
+  border: 1px solid #ccc;
+  background-color: #f5f5f5; 
   border: solid #ff0000;
 }
 </style>
