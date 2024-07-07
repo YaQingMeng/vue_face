@@ -1,9 +1,7 @@
 <template>
-  <div class="top-section-content">
-    <div class="charts-container">
-      <div id="line-chart" class="chart"></div>
-      <div id="pie-chart" class="chart"></div>
-    </div>
+  <div class="Bottom-section-content">
+    <div id="line-chart" class="chart1"></div>
+    <div id="pie-chart" class="chart2"></div>
   </div>
 </template>
 
@@ -42,7 +40,7 @@ export default {
         xAxis: {
           type: 'category',
           boundaryGap: false,
-          data: ['00:00', '01:15', '02:30', '03:45', '05:00', '06:15', '07:30', '08:45', '10:00', '11:15', '12:30', '13:45', '15:00', '16:15', '17:30', '18:45', '20:00', '21:15', '22:30', '23:45']
+          data: ['00:00', '03:00', '05:00', '08:00', '11:00', '13:00', '16:00', '19:00', '21:00', '00:00']
         },
         yAxis: {
           type: 'value',
@@ -87,7 +85,7 @@ export default {
             name: 'Electricity',
             type: 'line',
             smooth: true,
-            data: [300, 280, 250, 260, 270, 300, 550, 500, 400, 390, 380, 390, 400, 500, 600, 750, 800, 700, 600, 400],
+            data: [300, 280, 250, 260, 270, 300, 550, 500, 400, 390],
             markArea: {
               itemStyle: {
                 color: 'rgba(255, 173, 177, 0.4)'
@@ -215,18 +213,28 @@ export default {
 };
 </script>
 
-<style>
-.top-section-content {
-  padding: 20px;
-}
-
-.charts-container {
+<style scoped>
+.Bottom-section-content {
   display: flex;
-  justify-content: space-between;
+  flex: 1 1 auto;
+  padding: 10px;
 }
 
-.chart {
-  width: 48%;
-  height: 400px;
+.chart1 {
+
+  width: 550px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-right: 10px;
+  /* border: solid #ff0000; */
+}
+
+.chart2 {
+  flex: 1 1 auto;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  /* border: solid #ff0000; */
 }
 </style>

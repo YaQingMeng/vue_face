@@ -30,7 +30,6 @@ export default {
     display: flex;
     flex:1 1 auto; 
     flex-direction: column;  
-    border: solid #ff0000;
   }  
 
   .top-section {
@@ -50,7 +49,7 @@ export default {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
     border: 1px solid #ccc;
     background-color: #f5f5f5; 
-    border: solid #ff0000;
+    /* border: solid #ff0000; */
   }
 
   .left-section{

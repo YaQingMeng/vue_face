@@ -24,26 +24,27 @@ export default {
   display: flex;
   flex:1 1 auto; 
   flex-direction: column;  
-  border: solid #ff0000;
+  /* border: solid #ff0000; */
 }  
 
 .top-section {
+
   flex: 0 1 auto; 
   border-radius: 10px;
   margin-bottom: 10px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
   border: 1px solid #ccc;
   background-color: #f5f5f5; 
-  border: solid #ff0000;
+  /* border: solid #ff0000; */
 }  
   
-.bottom-section {  
+.bottom-section {
+  display: flex;
   flex: 1 1 auto; 
-  background-color: #ecf5ff;  
   border-radius: 10px; 
   box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
   border: 1px solid #ccc;
   background-color: #f5f5f5; 
-  border: solid #ff0000;
+  /* border: solid #ff0000; */
 }
 </style>

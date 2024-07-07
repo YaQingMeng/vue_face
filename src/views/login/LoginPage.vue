@@ -4,19 +4,19 @@
       <h1>登录</h1>  
       <form @submit.prevent="handleLogin">  
         <div class="form-group">  
-          <label for="userinfo.username">用户名</label>  
+          <label for="username">用户名</label>  
           <input  
             type="text"  
-            id="userinfo.username"  
+            id="username"  
             v-model="userinfo.username"  
             placeholder="请输入用户名"  
           />  
         </div>  
         <div class="form-group">  
-          <label for="userinfo.password">密码</label>  
+          <label for="password">密码</label>  
           <input  
-            type="userinfo.password"  
-            id="userinfo.password"  
+            type="password" 
+            id="password"  
             v-model="userinfo.password"  
             placeholder="请输入密码"  
           />  
@@ -24,9 +24,9 @@
         <button type="submit">登录</button>  
         <button @click="handleRegister">注册</button>  
         <p v-if="userinfo.errorMessage" class="userinfo.error-message">{{ errorMessage }}</p>  
-      </form>  
+      </form>
     </div>  
-  </div>  
+  </div>
 </template>
 
 <script>
@@ -55,6 +55,8 @@ export default {
   
       try {  
         // 发送登录请求到后端 
+        // 192.168.1.207
+        // 10.236.72.75
         const response = await axios.post('http://192.168.1.207:5000/login', {  
           username: this.userinfo.username,
           password: this.userinfo.password,

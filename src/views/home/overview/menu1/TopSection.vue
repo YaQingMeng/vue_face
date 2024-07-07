@@ -26,6 +26,8 @@ export default {
 
 <style scoped>
 .carousel-image {
+  display: flex;
+  flex: 1 1 auto;
   width: 100%;
   height: 100%;
   object-fit: cover;
