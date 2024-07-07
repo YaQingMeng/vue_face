@@ -2,11 +2,53 @@
   <el-container class="home-container">
 
     <el-header class="header">
+
       <h1 class = "title">门禁管理系统</h1>
+
+      <!-- 新版 下拉菜单 -->
+      <div class="menus-container">
+        <el-dropdown @command="handleCommand">
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item command="Overview" :class="{ active: menu.activeTab === 'Overview' }">
+                <el-icon><House /></el-icon> 主页
+              </el-dropdown-item>
+              <el-dropdown-item command="Dashboard" :class="{ active: menu.activeTab === 'Dashboard' }">
+                <el-icon><Operation /></el-icon> 控制台
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+          <span class="el-dropdown-link">
+            <el-icon><House /></el-icon> 主页
+            <i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+        </el-dropdown>
+
+        <el-dropdown @command="handleCommand">
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item command="StudentInfo" :class="{ active: menu.activeTab === 'StudentInfo' }">
+                <el-icon><User /></el-icon> 学生信息
+              </el-dropdown-item>
+              <el-dropdown-item command="StudentDashboard" :class="{ active: menu.activeTab === 'StudentDashboard' }">
+                <el-icon><UploadFilled /></el-icon> 新增学生
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+          <span class="el-dropdown-link">
+            <el-icon><User /></el-icon> 学生信息
+            <i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+        </el-dropdown>
+      </div>
+      
       <div class="user-info">
         <span>欢迎，{{user.username}}</span>
         <el-link href="/" type="primary" class="logout-link">切换账号</el-link>
       </div>
+
+      <!--  -->
+
     </el-header>
     
     <el-container class="main-container">
@@ -139,20 +181,35 @@ export default {
   },
   methods: {
     toggleMainMenu() {
+      this.menu.isStudentInfoMenuActive = false,
+      this.menu.isAttendanceMenuActive = false,
+      this.menu.isSettingMenuActive = false,
       this.menu.isMainMenuActive = !this.menu.isMainMenuActive;
     },
     toggleStudentInfoMenu() {
+      this.menu.isAttendanceMenuActive = false,
+      this.menu.isSettingMenuActive = false,
+      this.menu.isMainMenuActive = false,
       this.menu.isStudentInfoMenuActive = !this.menu.isStudentInfoMenuActive;
     },
     // toggleFacePhotoMenu() {
     //   this.menu.isFacePhotoMenuActive = !this.menu.isFacePhotoMenuActive;
     // },
     toggleAttendanceMenu() {
+      this.menu.isStudentInfoMenuActive = false,
+      this.menu.isSettingMenuActive = false,
+      this.menu.isMainMenuActive = false,
       this.menu.isAttendanceMenuActive = !this.menu.isAttendanceMenuActive;
     },
     toggleSettingMenu() {
+      this.menu.isAttendanceMenuActive = false,
+      this.menu.isMainMenuActive = false,
+      this.menu.isStudentInfoMenuActive = false,
       this.menu.isSettingMenuActive = !this.menu.isSettingMenuActive;
     },
+    handleCommand(command) {
+      this.menu.activeTab = command;
+    }
   },
   created() {  
     const user =localStorage.getItem('userinfo')
@@ -180,14 +237,36 @@ export default {
     background-color: #3f72af;
     color: white;
     align-items: center; /* 垂直居中 */
-    padding: 10px;
-    /* border-radius: 10px; */
+    border-radius: 10px 10px 0 0;
+    /* border: solid #ff0000; */
+    
   }
 
+  .menus-container{
+    display: flex;
+    flex: 0 1 auto;
+    /* border: solid #ff0000; */
+  }
+
+  .el-dropdown-link {
+    cursor: pointer;
+    color: white;
+    /* border-radius: 10px;
+    padding: 10px; */
+    margin-right: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+    /* border: 1px solid #ccc;  */
+    font-size: 20px;
+    background-color: #0f4c75;
+    padding: 10px;
+    border-radius: 10px;
+    /* border: solid #ff0000; */
+  }
   .title {
     flex: 0 0 auto;
     font-size: 26px; /* 设置字体大小 */
     font-family: 'Arial', sans-serif; /* 设置字体类型 */
+    margin-right: 10px;
     /* border: solid #ff0000; */
   }
 

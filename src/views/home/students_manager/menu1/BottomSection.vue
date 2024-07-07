@@ -83,11 +83,11 @@ export default {
     return {
       tableData: [
         { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
-        { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
-        { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
-        { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
-        { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
-        { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
+        { id: '20210001', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
+        { id: '20210002', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
+        { id: '20210003', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
+        { id: '20210005', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
+        { id: '202100006', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
         { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
         { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
         { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
@@ -99,7 +99,7 @@ export default {
         // More data here...
       ],
       currentPage: 1,
-      pageSize: 6,
+      pageSize: 7,
       dialogVisible1: false,
       dialogVisible2: false,
       currentRecord1: {
@@ -128,13 +128,13 @@ export default {
       this.currentPage = page;
     },
     handleUpdate(row){
-      const photoPath = '/public/login.jpg'; 
+      const photoPath = require('@/assets/images/image1.jpg'); 
       this.currentRecord2 = { ...row, phone : '13364009271',  email:'872472899@qq.com', photoPath: photoPath};
       this.dialogVisible2 = true;
     },
     handleQuery(row) {
       // 使用行数据来设置 currentRecord
-      const photoPath = '/public/login.jpg'; 
+      const photoPath = require('@/assets/images/image1.jpg'); 
       this.currentRecord1= { ...row, phone : '13364009271',  email:'872472899@qq.com', photoPath: photoPath};
       this.dialogVisible1 = true;
     },
@@ -189,7 +189,6 @@ export default {
     display: flex;
     flex:1 0 auto;
     flex-direction: column;
-    justify-content: center;
     align-items: center; 
     /* border: solid #ff0000; */
   }

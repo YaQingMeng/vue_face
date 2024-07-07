@@ -1,5 +1,5 @@
 <template>
-    <div class="top-section-content">
+    <div class="right-section-content">
       <h3>右部区域 待规划内容</h3>
     </div>
   </template>
@@ -10,9 +10,10 @@
   };
   </script>
   
-  <style scoped>
-  .top-section-content {
+<style scoped>
+  .right-section-content {
+    flex: 1 1 auto;
     border: solid #ff0000; 
   }
-  </style>
+</style>
   

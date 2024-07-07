@@ -1,12 +1,14 @@
 <template>
   <div class="bottom-section-content">
     <h3>刷脸记录</h3>
-    <el-table :data="paginatedData" stripe style="width: 100%">
-      <el-table-column prop="date" label="时间" width="180" />
-      <el-table-column prop="name" label="姓名" width="180" />
-      <el-table-column prop="address" label="学号" />
-      <el-table-column prop="status" label="状态" width="120" />
-      <el-table-column label="详情" width="180">
+    <el-table :data="paginatedData" >
+      <el-table-column prop="date" label="时间" width="150" />
+      <el-table-column prop="name" label="姓名" width="150" />
+      <el-table-column prop="id" label="学号" width="150" />
+      <el-table-column prop="department" label="学院" width="200" />
+      <el-table-column prop="dormid" label="宿舍号" width="150" />
+      <el-table-column prop="status" label="状态" width="150" />
+      <el-table-column label="详情">
         <template #default="scope">
           <el-button type="primary" size="mini" @click="handleQuery(scope.row)">详情</el-button>
           <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
@@ -37,13 +39,13 @@
           <el-input v-model="currentRecord.name" disabled></el-input>
         </el-form-item>
         <el-form-item label="学号">
-          <el-input v-model="currentRecord.address" disabled></el-input>
+          <el-input v-model="currentRecord.id" disabled></el-input>
         </el-form-item>
         <el-form-item label="状态">
           <el-input v-model="currentRecord.status" disabled></el-input>
         </el-form-item>
         <el-form-item label="刷脸详情">
-          <el-input v-model="currentRecord.info" disabled></el-input>
+          <img :src="currentRecord.photoPath" style="width: 100px; height: 100px;">
         </el-form-item>
       </el-form>
       <template #footer>
@@ -63,22 +65,18 @@ export default {
   data() {
     return {
       tableData: [
-        { date: '2016-05-03', name: 'Tom', address: 'No. 189, Grove St, Los Angeles', status: 'Late', info: 'Detail info 1' },
-        { date: '2016-05-02', name: 'Tom', address: 'No. 189, Grove St, Los Angeles', status: 'Late', info: 'Detail info 2' },
-        { date: '2016-05-04', name: 'Tom', address: 'No. 189, Grove St, Los Angeles', status: 'On Time', info: 'Detail info 3' },
-        { date: '2016-05-01', name: 'Tom', address: 'No. 189, Grove St, Los Angeles', status: 'Late', info: 'Detail info 4' },
-        { date: '2016-05-01', name: 'Tom', address: 'No. 189, Grove St, Los Angeles', status: 'Late', info: 'Detail info 4' },
-        { date: '2016-05-01', name: 'Tom', address: 'No. 189, Grove St, Los Angeles', status: 'Late', info: 'Detail info 4' },
-        { date: '2016-05-01', name: 'Tom', address: 'No. 189, Grove St, Los Angeles', status: 'Late', info: 'Detail info 4' },
-        { date: '2016-05-01', name: 'Tom', address: 'No. 189, Grove St, Los Angeles', status: 'Late', info: 'Detail info 4' },
-        { date: '2016-05-01', name: 'Tom', address: 'No. 189, Grove St, Los Angeles', status: 'Late', info: 'Detail info 4' },
-        { date: '2016-05-01', name: 'Tom', address: 'No. 189, Grove St, Los Angeles', status: 'Late', info: 'Detail info 4' },
-        { date: '2016-05-01', name: 'Tom', address: 'No. 189, Grove St, Los Angeles', status: 'Late', info: 'Detail info 4' },
-        { date: '2016-05-01', name: 'Tom', address: 'No. 189, Grove St, Los Angeles', status: 'Late', info: 'Detail info 4' },
-        { date: '2016-05-01', name: 'Tom', address: 'No. 189, Grove St, Los Angeles', status: 'Late', info: 'Detail info 4' },
-        { date: '2016-05-01', name: 'Tom', address: 'No. 189, Grove St, Los Angeles', status: 'Late', info: 'Detail info 4' },
-        { date: '2016-05-01', name: 'Tom', address: 'No. 189, Grove St, Los Angeles', status: 'Late', info: 'Detail info 4' },
-        { date: '2016-05-01', name: 'Tom', address: 'No. 189, Grove St, Los Angeles', status: 'Late', info: 'Detail info 4' },
+        { date: '2016-05-03', name: 'Tom', id: '20210000', department:'计算机学院', dormid:'341', status: '晚归' },
+        { date: '2016-05-03', name: 'Tom', id: '20210000', department:'计算机学院', dormid:'341', status: '正常归寝' },
+        { date: '2016-05-03', name: 'Tom', id: '20210000', department:'计算机学院', dormid:'341', status: '晚归' },
+        { date: '2016-05-03', name: 'Tom', id: '20210000', department:'计算机学院', dormid:'341', status: '正常归寝' },
+        { date: '2016-05-03', name: 'Tom', id: '20210000', department:'计算机学院', dormid:'341', status: '晚归' },
+        { date: '2016-05-03', name: 'Tom', id: '20210000', department:'计算机学院', dormid:'341', status: '正常归寝' },
+        { date: '2016-05-03', name: 'Tom', id: '20210000', department:'计算机学院', dormid:'341', status: '晚归' },
+        { date: '2016-05-03', name: 'Tom', id: '20210000', department:'计算机学院', dormid:'341', status: '正常归寝' },
+        { date: '2016-05-03', name: 'Tom', id: '20210000', department:'计算机学院', dormid:'341', status: '正常归寝' },
+        { date: '2016-05-03', name: 'Tom', id: '20210000', department:'计算机学院', dormid:'341', status: '正常归寝' },
+        { date: '2016-05-03', name: 'Tom', id: '20210000', department:'计算机学院', dormid:'341', status: '晚归' },
+        { date: '2016-05-03', name: 'Tom', id: '20210000', department:'计算机学院', dormid:'341', status: '晚归' },
         // More data here...
       ],
       currentPage: 1,
@@ -87,9 +85,11 @@ export default {
       currentRecord: {
         date: '',
         name: '',
-        address: '',
+        id: '',
+        department:'',
         status: '',
-        info: ''
+        dormid:'',
+        photoPath:'',
       },
     };
   },
@@ -122,7 +122,6 @@ export default {
     display: flex;
     flex:1 1 auto;
     flex-direction: column;
-    justify-content: center;
     align-items: center; 
     border: solid #ff0000;
   }

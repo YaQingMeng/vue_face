@@ -1,7 +1,7 @@
 <template>
   <div class="top-section-content">
-    <div class = "title">晚归记录</div>
-    <el-table :data="tableData" stripe class="full-width-table">
+    <div class="title">晚归记录</div>
+    <el-table :data="paginatedData" stripe class="full-width-table">
       <el-table-column prop="date" label="时间" width="120" />
       <el-table-column prop="name" label="姓名" width="120" />
       <el-table-column prop="id" label="学号" width="160"/>
@@ -14,20 +14,18 @@
     </el-table>
 
     <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
+      style="margin-top: 20px;"
+      background
+      layout="prev, pager, next"
       :current-page="currentPage"
-      :page-sizes="[10, 15, 20]"
+      @current-change="handlePageChange"
       :page-size="pageSize"
-      layout="total, sizes, prev, pager, next, jumper"
       :total="tableData.length"
-      class="pagination"
     />
 
-    <!-- 查询信息的弹框 -->
     <el-dialog
       title="刷脸信息"
-      v-model = "dialogVisible"
+      v-model="dialogVisible"
       width="30%"
     >
       <el-form :model="currentRecord">
@@ -38,7 +36,7 @@
           <el-input v-model="currentRecord.name" disabled></el-input>
         </el-form-item>
         <el-form-item label="学号">
-          <el-input v-model="currentRecord.address" disabled></el-input>
+          <el-input v-model="currentRecord.id" disabled></el-input>
         </el-form-item>
         <el-form-item label="状态">
           <el-input v-model="currentRecord.status" disabled></el-input>
@@ -56,9 +54,11 @@
   </div>
 </template>
 
+
 <script>
 import { defineComponent } from 'vue';
 import { ElMessage } from 'element-plus';
+
 
 export default defineComponent({
   name: 'RightSection',
@@ -67,13 +67,16 @@ export default defineComponent({
       this.currentPage = page;
     },
     handleQuery(row) {
-      // 使用行数据来设置 currentRecord
       this.currentRecord = { ...row, info: '固定刷脸详细信息' };
       this.dialogVisible = true;
     },
     handleDelete(row) {
       this.tableData = this.tableData.filter(item => item !== row);
       ElMessage.success('记录已删除');
+      // 处理删除后的分页问题
+      if (this.currentPage > 1 && this.paginatedData.length === 0) {
+        this.currentPage--;
+      }
     },
   },
   data() {
@@ -95,11 +98,12 @@ export default defineComponent({
         // More data here...
       ],
       currentPage: 1,
+      pageSize: 10,
       dialogVisible: false,
       currentRecord: {
         date: '',
         name: '',
-        address: '',
+        id: '',
         status: '',
         info: ''
       },
@@ -113,6 +117,7 @@ export default defineComponent({
     },
   },
 });
+
 </script>
 
 <style scoped>
@@ -120,8 +125,15 @@ export default defineComponent({
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
+  border: solid #ff0000;   
 }
-
+.title {
+  flex: auto;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  border: solid #ff0000; 
+}
 .full-width-table {
   width: 100%;
 }
@@ -130,9 +142,5 @@ export default defineComponent({
   margin-top: 20px; /* 分页组件与表格之间的间距 */
 }
 
-.title {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
+
 </style>
