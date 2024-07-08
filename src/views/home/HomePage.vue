@@ -338,6 +338,9 @@ export default {
   .aside-container{
     display: flex;
     padding: 10px;
+    width: 250px;
+    /* margin-right: -10px; */
+    background-color: #c8c9cc;
     /* border: solid #ff0000; */
   }
 
@@ -345,16 +348,18 @@ export default {
   .main-content{
     display: flex;
     padding: 10px;
+    background-color: #e9e9eb; 
     /* border: solid #ff0000; */
   }
 
   /* 左侧导航栏具体样式设置 */
-  .sidebar {
+  /* .sidebar {
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
     border: 1px solid #ccc;  
-    /* border: solid #ff0000; */
-  }
+    background-color: #819caf;
+    border: solid #ff0000;
+  } */
   
   .nav-list {
     flex: 1 1 auto;
