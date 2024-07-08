@@ -14,9 +14,9 @@
               <el-dropdown-item command="Overview" :class="{ active: menu.activeTab === 'Overview' }">
                 <el-icon><House /></el-icon> 主页
               </el-dropdown-item>
-              <el-dropdown-item command="Dashboard" :class="{ active: menu.activeTab === 'Dashboard' }">
+              <!-- <el-dropdown-item command="Dashboard" :class="{ active: menu.activeTab === 'Dashboard' }">
                 <el-icon><Operation /></el-icon> 控制台
-              </el-dropdown-item>
+              </el-dropdown-item> -->
             </el-dropdown-menu>
           </template>
           <span class="el-dropdown-link">
@@ -87,12 +87,14 @@
           <template #dropdown>
             <el-dropdown-menu>
               <!-- <el-dropdown-item @click.native="goToProfile">个人资料</el-dropdown-item> -->
-              <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
+              <el-dropdown-item @click="showUserInfo"><el-icon><Postcard /></el-icon>个人信息</el-dropdown-item>
+              <el-dropdown-item @click="logout"><el-icon><Switch /></el-icon> 退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </template>
           <span class="el-dropdown-link">
-            <!-- <img :src="user.avatar" class="avatar"> -->
+            <img src="/person.png" class="avatar">
             <span>{{ user.username }} <el-icon><ArrowDown /></el-icon></span>
+            
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
         </el-dropdown>
@@ -115,9 +117,9 @@
             <li @click="menu.activeTab = 'Overview'" :class="{ active: menu.activeTab === 'Overview' }">
               <el-icon><House /></el-icon> 主页
             </li>
-            <li @click="menu.activeTab = 'Dashboard'" :class="{ active: menu.activeTab === 'Dashboard' }">
+            <!-- <li @click="menu.activeTab = 'Dashboard'" :class="{ active: menu.activeTab === 'Dashboard' }">
               <el-icon><Operation /></el-icon> 控制台
-            </li>
+            </li> -->
           </ul>
 
           <li @click="toggleStudentInfoMenu" :class="{ active: menu.isStudentInfoMenuActive }">
@@ -152,7 +154,7 @@
               <el-icon><Document /></el-icon> 考勤数据
             </li>
             <li @click="menu.activeTab = 'AttendanceDashboard'" :class="{ active: menu.activeTab === 'AttendanceDashboard' }">
-              <el-icon><CircleClose /></el-icon> 异常考勤记录
+              <el-icon><CircleClose /></el-icon> 异常记录
             </li>
           </ul>
 
@@ -187,12 +189,29 @@
 
     </el-container>
 
+  <!-- 个人信息的弹框 -->  
+  <el-dialog title="个人信息" v-model="dialogVisible1" width="30%">  
+    <el-form>  
+      <el-form-item label="姓名">  
+        <span>{{ user.username }}</span>  
+      </el-form-item>  
+      <el-form-item label="电话">  
+        <span>{{ user.photo_number }}</span>  
+      </el-form-item>  
+    </el-form>  
+    <template #footer>  
+      <div class="dialog-footer">  
+        <el-button @click="dialogVisible1 = false">关闭</el-button>  
+      </div>  
+    </template>  
+  </el-dialog>
+
   </el-container>
 </template>
 
 <script>
 import Overview from './overview/menu1/Overview.vue';
-import Dashboard from './overview/menu2/Dashboard.vue';
+// import Dashboard from './overview/menu2/Dashboard.vue';
 import StudentInfo from './students_manager/menu1/StudentInfo.vue';
 import StudentDashboard from './students_manager/menu2/UploadImage.vue'; 
 import Attendance from './attendance/menu1/Attendance.vue';
@@ -205,7 +224,8 @@ import SettingDashboard from './setting/menu2/Dashboard.vue';
 export default {
   name: 'HomePage',
   components: { 
-    Overview, Dashboard, 
+    Overview, 
+    // Dashboard, 
     StudentInfo, StudentDashboard, 
     Attendance, AttendanceDashboard, 
     // FacePhoto, FaceDashboard, 
@@ -215,7 +235,7 @@ export default {
     return {
       menu:{
         activeTab: 'Overview',
-        isMainMenuActive: false, // 控制主页子菜单的显示与隐藏
+        // isMainMenuActive: false, // 控制主页子菜单的显示与隐藏
         isStudentInfoMenuActive: false, // 控制学生信息子菜单的显示与隐藏
         // isFacePhotoMenuActive: false, // 控制人脸数据子菜单的显示与隐藏
         isAttendanceMenuActive: false, // 控制考勤数据子菜单的显示与隐藏
@@ -227,6 +247,7 @@ export default {
         errorMessage: '',
         is_login:'',
       },
+      dialogVisible1 : false,
     };
   },
   methods: {
@@ -264,6 +285,9 @@ export default {
       // 处理退出登录逻辑
       this.$router.push('/');
     },
+    showUserInfo() {
+      this.dialogVisible1 = true;
+    }
   },
   created() {  
     const user =localStorage.getItem('userinfo')
@@ -288,7 +312,7 @@ export default {
   /*顶部显示*/
   .header {
     display: flex;
-    background-color: #3f72af;
+    background-color: black;
     color: white;
     align-items: center; /* 垂直居中 */
     border-radius: 10px 10px 0 0;
@@ -305,16 +329,16 @@ export default {
   .el-dropdown-link {
     color: white;
     margin-right: 10px;
-    font-size: 20px;
-    background-color: #0f4c75;
+    font-size: 16px;
+    /* background-color: #0f4c75; */
     padding: 10px;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     /* border: solid #ff0000; */
   }
   
   .title {
     flex: 0 0 auto;
-    font-size: 26px; /* 设置字体大小 */
+    font-size: 22px; /* 设置字体大小 */
     font-family: 'Arial', sans-serif; /* 设置字体类型 */
     margin-right: 40px;
     /* border: solid #ff0000; */
@@ -338,9 +362,9 @@ export default {
   .aside-container{
     display: flex;
     padding: 10px;
-    width: 250px;
-    /* margin-right: -10px; */
-    background-color: #c8c9cc;
+    width: 200px;
+    border-radius: 0 0 0 10px;
+    background-color: #303841;
     /* border: solid #ff0000; */
   }
 
@@ -349,6 +373,7 @@ export default {
     display: flex;
     padding: 10px;
     background-color: #e9e9eb; 
+    border-radius: 0 0 10px 0;
     /* border: solid #ff0000; */
   }
 
@@ -362,31 +387,38 @@ export default {
   } */
   
   .nav-list {
+    display: flex;
+    flex-direction: column;
     flex: 1 1 auto;
     list-style: none;
-    /* border: solid #ff0000; */
+
   }
   
   .nav-list li {
-    flex: 1 1;
+    flex: 0 1 auto;
     padding: 10px;
+    color: #eeeeee;
     cursor: pointer;
     margin-bottom: 20px;
     margin-left: -30px;
     margin-right: 10px;
-    background-color: #dbe2ef;
+    background-color: #303841;
     border-radius: 10px;
     transition: background-color 0.3s ease;
+
   }
   
   .nav-list li:hover {
-    background-color: #e0e0e0;
+    background-color: #212121;
   }
   
   .nav-list li.active {
-    background-color: #0f4c75;
-    color: #fff;
+    background-color: #212121;
   }
-  
 
+  .avatar{
+    height: 30px;
+    width: 30px;
+    border-radius: 20px;
+  }
 </style>

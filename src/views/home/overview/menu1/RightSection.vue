@@ -13,7 +13,6 @@
     </div>
 
     <!-- 分页控制器 -->
-    <div class="pagination-container">
       <el-pagination
         @current-change="handleCurrentChange"
         :current-page="currentPage"
@@ -22,7 +21,6 @@
         :total="timelineItems.length"
         background>
       </el-pagination>
-    </div>
   </div>
 </template>
 
@@ -66,10 +64,11 @@ export default {
 .left-section-content {
   flex:auto;
   display: flex;
-  padding: 20px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center; /* 居中内容 */
+  /* border: solid #ff0000; */
 }
 
 .charts-container {
@@ -78,14 +77,11 @@ export default {
   width: 100%; /* 让内容铺满整个宽度 */
 }
 
-.item{
-  height:80px;
-  border: red;
-}
 
-.pagination-container {
-  width: 100%; /* 让分页器占满整个宽度 */
-  margin-top: 20px; /* 设置分页器与内容的间距 */
+
+.el-pagination {
+  /* border: solid #ff0000; */
+  align-self: center;
 }
 
 </style>

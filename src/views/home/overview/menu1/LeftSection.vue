@@ -40,7 +40,7 @@ export default {
         yAxis: {
           type: 'value',
           axisLabel: {
-            formatter: '{value} W'
+            formatter: '{value} 人数'
           },
           axisPointer: {
             snap: true
@@ -52,22 +52,23 @@ export default {
           pieces: [
             {
               gt: 0,
-              lte: 1000,
+              lte: 50,
               color: 'green'
             },
-            // {
-            //   gt: 10,
-            //   color: 'red'
-            // },
+            {
+              gt: 50,
+              lte: 1000,
+              color: 'red'
+            },
           ],
         },
         
         series: [
           {
-            name: 'Electricity',
+            name: '人数',
             type: 'line',
             smooth: true,
-            data: [300, 280, 250, 260, 270, 300, 550, 500, 400, 390],
+            data: [0, 0, 0, 260, 100, 200, 100, 300, 260, 50],
             markArea: {
               itemStyle: {
                 color: 'rgba(255, 173, 177, 0.4)'
@@ -106,6 +107,7 @@ export default {
 <style scoped>
   .chart1 {
       flex: 1 1 auto;
+      /* border: solid #ff0000; */
   }
 </style>
   

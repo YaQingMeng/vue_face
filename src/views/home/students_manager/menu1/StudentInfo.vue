@@ -31,7 +31,7 @@ export default {
     display: flex;
     flex:0 0 auto;
     height: 150px;
-    background-color: #f5f5f5;    
+    background-color: #fff;    
     border: 1px solid #ccc;  
     border-radius: 10px;
     padding: 10px;
@@ -41,7 +41,7 @@ export default {
   .bottom-section {  
     display: flex;
     flex:1 0 auto;
-    background-color: #f5f5f5;    
+    background-color: #fff;    
     border: 1px solid #ccc;  
     border-radius: 10px;
     padding: 10px;

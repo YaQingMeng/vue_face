@@ -1,12 +1,16 @@
 <template>
   <div class="right-section-content">
-    <div class="title">晚归记录</div>
+
+    <el-container class="titles">
+      <h3>刷脸记录</h3>
+      <el-button type="success" round @click="handleAlert" class="action-button">导出考勤数据</el-button>
+    </el-container>
     
     <el-table :data="paginatedData" stripe class="full-width-table">
-      <el-table-column prop="date" label="时间" width="120" />
-      <el-table-column prop="name" label="姓名" width="120" />
-      <el-table-column prop="id" label="学号" width="160"/>
-      <el-table-column label="详情" width="180">
+      <el-table-column prop="date" label="时间" />
+      <el-table-column prop="name" label="姓名" />
+      <el-table-column prop="id" label="学号" />
+      <el-table-column label="详情">
         <template #default="scope">
           <el-button type="primary" size="mini" @click="handleQuery(scope.row)">详情</el-button>
           <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
@@ -52,13 +56,17 @@
         </div>
       </template>
     </el-dialog>
+
+    <!-- <div class="action-button">
+      <el-button type="success" round @click="handleAlert">导出考勤数据</el-button>
+    </div> -->
   </div>
 </template>
 
 
 <script>
 import { defineComponent } from 'vue';
-import { ElMessage } from 'element-plus';
+import { ElMessage, ElMessageBox } from 'element-plus';
 
 
 export default defineComponent({
@@ -78,6 +86,12 @@ export default defineComponent({
       if (this.currentPage > 1 && this.paginatedData.length === 0) {
         this.currentPage--;
       }
+    },
+    handleAlert() {
+      ElMessageBox.alert('确认导出考勤记录？', '提醒', {
+        confirmButtonText: '确定',
+        type: 'info',
+      });
     },
   },
   data() {
@@ -123,19 +137,12 @@ export default defineComponent({
 
 <style scoped>
 .right-section-content {
-  padding: 10px;
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
   /* border: solid #ff0000;    */
 }
-.title {
-  flex: 0 1 auto;
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  /* border: solid #ff0000;  */
-}
+
 .full-width-table {
   width: 100%;
 
@@ -148,5 +155,16 @@ export default defineComponent({
   /* border: solid #ff0000;  */
 }
 
+.titles {
+  align-self: center;
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  /* border: solid #ff0000; */
+}
+.action-button {
+  margin-left: 10px;
+   /* border: solid #ff0000; */
+}
 
 </style>

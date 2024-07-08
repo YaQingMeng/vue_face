@@ -58,7 +58,7 @@ export default {
 .setting-container {
   flex:1 1 auto;  
   flex-direction: column;  
-  border: solid #ff0000;
+  /* border: solid #ff0000; */
 }
 
 .sidebar {

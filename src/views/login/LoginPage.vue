@@ -63,7 +63,7 @@ export default {
         });
         console.log(response);
   
-        if (response.data.code === 200) {  
+        if (response.data.code === 200) {
           // 登录成功，存储用户信息
           this.userinfo.is_login = 1;
           localStorage.setItem("userinfo", JSON.stringify(this.userinfo))

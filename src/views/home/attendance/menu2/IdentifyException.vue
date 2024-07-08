@@ -71,7 +71,7 @@ export default {
         // Add more photos with details
       ],
       currentPage: 1,
-      pageSize: 4, // Number of photos per page
+      pageSize: 6, // Number of photos per page
       dialogVisible: false,
       selectedPhoto: null,
       addToDatabase: false,
@@ -129,7 +129,7 @@ export default {
 
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(2, minmax(200px, 1fr));
   gap: 10px;
   /* border: solid #ff0000;  */
 }
@@ -158,7 +158,7 @@ export default {
 }
 
 .el-pagination {
-  border: solid #ff0000;
+  /* border: solid #ff0000; */
   align-self: center;
 }
 

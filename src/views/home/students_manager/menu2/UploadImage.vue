@@ -189,13 +189,12 @@ export default {
   display: flex;
   flex:1 1 auto;
   justify-content: center;
-  padding: 10px;
-  border: solid #ff0000;
+  /* border: solid #ff0000; */
 }
 
 .user-form-card {
   flex: 1 1 auto;
-  border: solid #ff0000;
+  /* border: solid #ff0000; */
 
 }
 </style>

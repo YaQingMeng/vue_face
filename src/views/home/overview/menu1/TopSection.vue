@@ -14,10 +14,10 @@ export default {
   data() {
     return {
       images: [
-        require('@/assets/images/image1.jpg'),
-        require('@/assets/images/image1.jpg'),
-        require('@/assets/images/image1.jpg'),
-        require('@/assets/images/image1.jpg'),
+        require('@/assets/images/image1.png'),
+        require('@/assets/images/image2.png'),
+        require('@/assets/images/image3.png'),
+        require('@/assets/images/image4.jpg'),
       ],
     };
   },
