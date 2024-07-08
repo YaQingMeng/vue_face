@@ -115,23 +115,22 @@ export default {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
-  border: solid #ff0000;   
+  /* border: solid #ff0000; */
+  padding: 10px;
 }
 
 .title {
-  flex: auto;
-  margin-top: 0;
+  flex: 0 1 auto;
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
-  border: solid #ff0000; 
+  /* border: solid #ff0000;  */
 }
 
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 10px;
-  margin-top: 10px;
   /* border: solid #ff0000;  */
 }
 
@@ -159,9 +158,8 @@ export default {
 }
 
 .el-pagination {
-  margin-top: 10px;
-  
-  bottom: 10px;
+  border: solid #ff0000;
+  align-self: center;
 }
 
 .buttons{

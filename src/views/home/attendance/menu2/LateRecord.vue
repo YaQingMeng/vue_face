@@ -1,6 +1,7 @@
 <template>
-  <div class="top-section-content">
+  <div class="right-section-content">
     <div class="title">晚归记录</div>
+    
     <el-table :data="paginatedData" stripe class="full-width-table">
       <el-table-column prop="date" label="时间" width="120" />
       <el-table-column prop="name" label="姓名" width="120" />
@@ -121,25 +122,30 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.top-section-content {
+.right-section-content {
+  padding: 10px;
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  border: solid #ff0000;   
+  /* border: solid #ff0000;    */
 }
 .title {
-  flex: auto;
+  flex: 0 1 auto;
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
-  border: solid #ff0000; 
+  /* border: solid #ff0000;  */
 }
 .full-width-table {
   width: 100%;
+
+  /* border: solid #ff0000; */
 }
 
-.pagination {
-  margin-top: 20px; /* 分页组件与表格之间的间距 */
+.el-pagination {
+  align-self: center;
+
+  /* border: solid #ff0000;  */
 }
 
 

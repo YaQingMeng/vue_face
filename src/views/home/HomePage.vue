@@ -7,6 +7,7 @@
 
       <!-- 新版 下拉菜单 -->
       <div class="menus-container">
+
         <el-dropdown @command="handleCommand">
           <template #dropdown>
             <el-dropdown-menu>
@@ -40,15 +41,64 @@
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
         </el-dropdown>
+
+        <el-dropdown @command="handleCommand">
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item command="Attendance" :class="{ active: menu.activeTab === 'Attendance' }">
+                <el-icon><Document /></el-icon> 考勤数据
+              </el-dropdown-item>
+              <el-dropdown-item command="AttendanceDashboard" :class="{ active: menu.activeTab === 'AttendanceDashboard' }">
+                <el-icon><Document /></el-icon> 异常考勤记录
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+          <span class="el-dropdown-link">
+            <el-icon><Document /></el-icon> 考勤数据
+            <i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+        </el-dropdown>
+
+        <el-dropdown @command="handleCommand">
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item command="Attendance" :class="{ active: menu.activeTab === 'Attendance' }">
+                <el-icon><Tools /></el-icon> 设置
+              </el-dropdown-item>
+              <!-- <el-dropdown-item command="AttendanceDashboard" :class="{ active: menu.activeTab === 'AttendanceDashboard' }">
+                <el-icon><Tools /></el-icon> 控制台
+              </el-dropdown-item> -->
+            </el-dropdown-menu>
+          </template>
+          <span class="el-dropdown-link">
+            <el-icon><Tools /></el-icon> 设置
+            <i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+        </el-dropdown>
+
       </div>
       
-      <div class="user-info">
+      <!-- <div class="user-info">
         <span>欢迎，{{user.username}}</span>
         <el-link href="/" type="primary" class="logout-link">切换账号</el-link>
+      </div> -->
+      <div class="user-info">
+        <el-dropdown>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <!-- <el-dropdown-item @click.native="goToProfile">个人资料</el-dropdown-item> -->
+              <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+          <span class="el-dropdown-link">
+            <!-- <img :src="user.avatar" class="avatar"> -->
+            <span>{{ user.username }} <el-icon><ArrowDown /></el-icon></span>
+            <i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+        </el-dropdown>
       </div>
 
-      <!--  -->
-
+    <!--旧版 侧边栏-->
     </el-header>
     
     <el-container class="main-container">
@@ -102,7 +152,7 @@
               <el-icon><Document /></el-icon> 考勤数据
             </li>
             <li @click="menu.activeTab = 'AttendanceDashboard'" :class="{ active: menu.activeTab === 'AttendanceDashboard' }">
-              <el-icon><Document /></el-icon> 异常考勤记录
+              <el-icon><CircleClose /></el-icon> 异常考勤记录
             </li>
           </ul>
 
@@ -113,9 +163,9 @@
             <li @click="menu.activeTab = 'Setting'" :class="{ active: menu.activeTab === 'Setting' }">
               <el-icon><Tools /></el-icon> 设置
             </li>
-            <li @click="menu.activeTab = 'SettingDashboard'" :class="{ active: menu.activeTab === 'SettingDashboard' }">
+            <!-- <li @click="menu.activeTab = 'SettingDashboard'" :class="{ active: menu.activeTab === 'SettingDashboard' }">
               <el-icon><Tools /></el-icon> 控制台
-            </li>
+            </li> -->
           </ul>
         </ul>
 
@@ -209,7 +259,11 @@ export default {
     },
     handleCommand(command) {
       this.menu.activeTab = command;
-    }
+    },
+    logout() {
+      // 处理退出登录逻辑
+      this.$router.push('/');
+    },
   },
   created() {  
     const user =localStorage.getItem('userinfo')
@@ -249,24 +303,20 @@ export default {
   }
 
   .el-dropdown-link {
-    cursor: pointer;
     color: white;
-    /* border-radius: 10px;
-    padding: 10px; */
     margin-right: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
-    /* border: 1px solid #ccc;  */
     font-size: 20px;
     background-color: #0f4c75;
     padding: 10px;
     border-radius: 10px;
     /* border: solid #ff0000; */
   }
+  
   .title {
     flex: 0 0 auto;
     font-size: 26px; /* 设置字体大小 */
     font-family: 'Arial', sans-serif; /* 设置字体类型 */
-    margin-right: 10px;
+    margin-right: 40px;
     /* border: solid #ff0000; */
   }
 
