@@ -1,17 +1,16 @@
 <template>
-    <div class="top-section-content">
+  <div class="top-section-content">
+  </div>
+</template>
 
-    </div>
-  </template>
-  
-  <script>
+<script>
   export default {
     name: 'RightSection',
   };
-  </script>
-  
-  <style scoped>
+</script>
+
+<style scoped>
   .top-section-content {
     padding: 20px;
   }
-  </style>
+</style>

@@ -21,37 +21,40 @@
 </template>
 
 <script>
-export default {
-  name: 'RightSection',
-};
+  export default {
+    name: 'RightSection',
+  };
 </script>
 
 <style scoped>
+  .card-container {
+    display: flex;
+    flex: 1 1 auto;
+    display: flex;
+    gap: 10px;
+    /* 卡片之间的间距 */
+    /* border: solid #ff0000;  */
+  }
 
-.card-container {
-  display: flex;
-  flex: 1 1 auto;
-  display: flex;
-  gap: 10px; /* 卡片之间的间距 */
-  /* border: solid #ff0000;  */
-}
-
-.custom-card {
-  flex: 1 1 auto;
-  /* width: 250px;
+  .custom-card {
+    flex: 1 1 auto;
+    /* width: 250px;
   height: 120px; */
-  background-color: #fff;
-  color: #1976d2;
-  /* border: solid #ff0000;  */
-}
+    background-color: #fff;
+    color: #1976d2;
+    /* border: solid #ff0000;  */
+  }
 
-.card-content {
-  padding: 20px;
-}
+  .card-content {
+    padding: 20px;
+  }
 
-.card-title {
-  font-weight: bold; /* 加粗 */
-  font-size: 18px; /* 字号加大 */
-  text-align: left; /* 靠左对齐 */
-}
+  .card-title {
+    font-weight: bold;
+    /* 加粗 */
+    font-size: 18px;
+    /* 字号加大 */
+    text-align: left;
+    /* 靠左对齐 */
+  }
 </style>

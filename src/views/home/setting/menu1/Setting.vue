@@ -30,52 +30,52 @@
 </template>
 
 <script>
-export default {
-  name: 'AttendancePage',
-  data() {
-    return {
-      form: {
-        username: '',
-        email: '',
-        role: '',
-        phone:'',
-        status: false,
+  export default {
+    name: 'AttendancePage',
+    data() {
+      return {
+        form: {
+          username: '',
+          email: '',
+          role: '',
+          phone: '',
+          status: false,
+        },
+      };
+    },
+    methods: {
+      onSubmit() {
+        console.log('提交表单:', this.form);
       },
-    };
-  },
-  methods: {
-    onSubmit() {
-      console.log('提交表单:', this.form);
+      onReset() {
+        this.$refs.userInfoForm.resetFields();
+      },
     },
-    onReset() {
-      this.$refs.userInfoForm.resetFields();
-    },
-  },
-};
+  };
 </script>
 
 <style scoped>
-.setting-container {
-  flex:1 1 auto;  
-  flex-direction: column;  
-  /* border: solid #ff0000; */
-}
+  .setting-container {
+    flex: 1 1 auto;
+    flex-direction: column;
+    /* border: solid #ff0000; */
+  }
 
-.sidebar {
-  width: 250px;
-  background-color: #ecf5ff;
-  padding: 20px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-}
+  .sidebar {
+    width: 250px;
+    background-color: #ecf5ff;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+  }
 
-.main-content {
-  flex: 1;
-  padding: 20px;
-  background-color: #fff;
-}
+  .main-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+  }
 
-.user-info-form {
-  width: 100%;
-}
+  .user-info-form {
+    width: 100%;
+  }
 </style>

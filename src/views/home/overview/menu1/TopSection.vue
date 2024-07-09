@@ -9,28 +9,27 @@
 </template>
 
 <script>
-export default {
-  name: 'CarouselExample',
-  data() {
-    return {
-      images: [
-        require('@/assets/images/image1.png'),
-        require('@/assets/images/image2.png'),
-        require('@/assets/images/image3.png'),
-        require('@/assets/images/image4.jpg'),
-      ],
-    };
-  },
-};
+  export default {
+    name: 'CarouselExample',
+    data() {
+      return {
+        images: [
+          require('@/assets/images/image1.png'),
+          require('@/assets/images/image2.png'),
+          require('@/assets/images/image3.jpg'),
+        ],
+      };
+    },
+  };
 </script>
 
 <style scoped>
-.carousel-image {
-  display: flex;
-  flex: 1 1 auto;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  background-color: #fff; 
-}
+  .carousel-image {
+    display: flex;
+    flex: 1 1 auto;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-color: #fff;
+  }
 </style>

@@ -144,6 +144,7 @@ export default {
 
 .el-button {
   width: 30%;
+  margin-left: 15%;
 }
   
 .error-message {  
