@@ -1,31 +1,41 @@
-<template>  
-  <div class="fullscreen-container">  
-    <div class="login-container">  
-      <h1>登录</h1>  
-      <form @submit.prevent="handleLogin">  
-        <div class="form-group">  
-          <label for="username">用户名</label>  
-          <input  
-            type="text"  
-            id="username"  
-            v-model="userinfo.username"  
-            placeholder="请输入用户名"  
-          />  
-        </div>  
-        <div class="form-group">  
-          <label for="password">密码</label>  
-          <input  
-            type="password" 
-            id="password"  
-            v-model="userinfo.password"  
-            placeholder="请输入密码"  
-          />  
-        </div>  
-        <button type="submit">登录</button>  
-        <button @click="handleRegister">注册</button>  
-        <p v-if="userinfo.errorMessage" class="userinfo.error-message">{{ errorMessage }}</p>  
-      </form>
-    </div>  
+<template>
+  <div class="fullscreen-container">
+    <el-card class="login-container">
+      <h2>登录</h2>
+      <el-form @submit.prevent="handleLogin" :model="userinfo" class="login-form" label-width="70px">
+        <el-form-item label="用户名" prop="username">
+          <el-input
+            type="text"
+            id="username"
+            v-model="userinfo.username"
+            placeholder="请输入用户名"
+          >
+          <template #prefix>
+            <el-icon>
+              <User />
+            </el-icon>
+          </template>
+        </el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input
+            type="password"
+            id="password"
+            v-model="userinfo.password"
+            placeholder="请输入密码"
+          >
+          <template #prefix>
+            <el-icon><Key /></el-icon>
+          </template>
+        </el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="handleLogin">登录</el-button>
+          <el-button @click="handleRegister">注册</el-button>
+        </el-form-item>
+        <p v-if="userinfo.errorMessage" class="userinfo-error-message">{{ errorMessage }}</p>
+      </el-form>
+    </el-card>
   </div>
 </template>
 
@@ -41,7 +51,15 @@ export default {
         password: '',
         errorMessage: '',
         is_login:'0',
-      }
+      },
+      // rules: {
+      //   username: [
+      //     { required: true, message: '请输入用户名', trigger: 'blur' }
+      //   ],
+      //   password: [
+      //     { required: true, message: '请输入密码', trigger: 'blur' }
+      //   ],
+      // }
     }
   },
   methods: {
@@ -87,9 +105,6 @@ export default {
   },  
 };
 </script>
-  
-  
-
 
 
 <style scoped>
@@ -114,40 +129,22 @@ export default {
   padding: 10px;  
   border-radius: 10px;  
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  
-  width: 400px;
+  width: 500px;
   text-align: center;
 }  
-  
-.form-group {  
-  margin-bottom: 15px;  
-}  
-  
-.form-group label {  
-  display: block;  
-  margin-bottom: 5px;  
-}  
-  
-.form-group input {  
-  width: calc(100% - 22px); /* 减去padding和border的宽度 */  
-  padding: 10px;  
-  border: 1px solid #ccc;  
-  border-radius: 5px;  
-}  
-  
-button {  
-  padding: 10px 20px;  
-  margin-top: 10px;  
-  border: none;  
-  border-radius: 5px;  
-  cursor: pointer;  
-}  
-  
-button[type="submit"] {  
-  background-color: #62b3f1; 
-  margin-right: 10%;
-  color: white;  
-}  
 
+.login-form{
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.el-input {
+  margin-bottom: 20px;
+}
+
+.el-button {
+  width: 30%;
+}
   
 .error-message {  
   color: red;  
@@ -155,4 +152,3 @@ button[type="submit"] {
 }
   </style>
   
-
