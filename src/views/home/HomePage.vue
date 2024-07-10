@@ -15,9 +15,6 @@
                   <House />
                 </el-icon> 主页
               </el-dropdown-item>
-              <!-- <el-dropdown-item command="Dashboard" :class="{ active: menu.activeTab === 'Dashboard' }">
-                <el-icon><Operation /></el-icon> 控制台
-              </el-dropdown-item> -->
             </el-dropdown-menu>
           </template>
           <span class="el-dropdown-link">
@@ -99,7 +96,6 @@
         <el-dropdown>
           <template #dropdown>
             <el-dropdown-menu>
-              <!-- <el-dropdown-item @click.native="goToProfile">个人资料</el-dropdown-item> -->
               <el-dropdown-item @click="showUserInfo"><el-icon>
                   <Postcard />
                 </el-icon>个人信息</el-dropdown-item>
@@ -123,29 +119,16 @@
 
       <!--旧版 侧边栏-->
     </el-header>
-
     <el-container class="main-container">
-
       <el-aside class="aside-container">
         <el-container class="sidebar">
-
           <ul class="nav-list">
 
-            <li @click="toggleMainMenu" :class="{ active: menu.isMainMenuActive }">
+            <li @click="menu.activeTab = 'Overview'" :class="{ active: menu.activeTab === 'Overview' }">
               <el-icon>
                 <House />
               </el-icon> 主页
             </li>
-            <ul v-if="menu.isMainMenuActive" class="sub-menu">
-              <li @click="menu.activeTab = 'Overview'" :class="{ active: menu.activeTab === 'Overview' }">
-                <el-icon>
-                  <House />
-                </el-icon> 主页
-              </li>
-              <!-- <li @click="menu.activeTab = 'Dashboard'" :class="{ active: menu.activeTab === 'Dashboard' }">
-              <el-icon><Operation /></el-icon> 控制台
-            </li> -->
-            </ul>
 
             <li @click="toggleStudentInfoMenu" :class="{ active: menu.isStudentInfoMenuActive }">
               <el-icon>
@@ -185,18 +168,12 @@
               </li>
             </ul>
 
-            <li @click="toggleSettingMenu" :class="{ active: menu.isSettingMenuActive }">
+
+            <li @click="menu.activeTab = 'Setting'" :class="{ active: menu.activeTab === 'Setting' }">
               <el-icon>
                 <Tools />
               </el-icon> 设置
             </li>
-            <ul v-if="menu.isSettingMenuActive" class="sub-menu">
-              <li @click="menu.activeTab = 'Setting'" :class="{ active: menu.activeTab === 'Setting' }">
-                <el-icon>
-                  <Tools />
-                </el-icon> 设置
-              </li>
-            </ul>
           </ul>
 
         </el-container>
@@ -204,7 +181,6 @@
 
       <el-main class="main-content">
         <Overview v-if="menu.activeTab === 'Overview'" />
-        <Dashboard v-if="menu.activeTab === 'Dashboard'" />
         <StudentInfo v-if="menu.activeTab === 'StudentInfo'" />
         <StudentDashboard v-if="menu.activeTab === 'StudentDashboard'" />
         <Attendance v-if="menu.activeTab === 'Attendance'" />
@@ -236,7 +212,6 @@
 
 <script>
   import Overview from './overview/menu1/Overview.vue';
-  // import Dashboard from './overview/menu2/Dashboard.vue';
   import StudentInfo from './students_manager/menu1/StudentInfo.vue';
   import StudentDashboard from './students_manager/menu2/UploadImage.vue';
   import Attendance from './attendance/menu1/Attendance.vue';
@@ -247,21 +222,16 @@
     name: 'HomePage',
     components: {
       Overview,
-      // Dashboard, 
       StudentInfo, StudentDashboard,
       Attendance, AttendanceDashboard,
-      // FacePhoto, FaceDashboard, 
       Setting,
     },
     data() {
       return {
         menu: {
           activeTab: 'Overview',
-          // isMainMenuActive: false, // 控制主页子菜单的显示与隐藏
           isStudentInfoMenuActive: false, // 控制学生信息子菜单的显示与隐藏
-          // isFacePhotoMenuActive: false, // 控制人脸数据子菜单的显示与隐藏
           isAttendanceMenuActive: false, // 控制考勤数据子菜单的显示与隐藏
-          isSettingMenuActive: false, // 控制设置子菜单的显示与隐藏
         },
         user: {
           username: '',
@@ -273,35 +243,21 @@
       };
     },
     methods: {
-      toggleMainMenu() {
-        this.menu.isStudentInfoMenuActive = false,
-          this.menu.isAttendanceMenuActive = false,
-          this.menu.isSettingMenuActive = false,
-          this.menu.isMainMenuActive = !this.menu.isMainMenuActive;
-      },
       toggleStudentInfoMenu() {
         this.menu.isAttendanceMenuActive = false,
-          this.menu.isSettingMenuActive = false,
           this.menu.isMainMenuActive = false,
           this.menu.isStudentInfoMenuActive = !this.menu.isStudentInfoMenuActive;
       },
       toggleAttendanceMenu() {
         this.menu.isStudentInfoMenuActive = false,
-          this.menu.isSettingMenuActive = false,
           this.menu.isMainMenuActive = false,
           this.menu.isAttendanceMenuActive = !this.menu.isAttendanceMenuActive;
-      },
-      toggleSettingMenu() {
-        this.menu.isAttendanceMenuActive = false,
-          this.menu.isMainMenuActive = false,
-          this.menu.isStudentInfoMenuActive = false,
-          this.menu.isSettingMenuActive = !this.menu.isSettingMenuActive;
       },
       handleCommand(command) {
         this.menu.activeTab = command;
       },
       logout() {
-        // 处理退出登录逻辑
+        localStorage.clear();
         this.$router.push('/');
       },
       showUserInfo() {
@@ -333,7 +289,6 @@
     background-color: black;
     color: white;
     align-items: center;
-    /* 垂直居中 */
     border-radius: 10px 10px 0 0;
     /* border: solid #ff0000; */
   }
@@ -358,9 +313,7 @@
   .title {
     flex: 0 0 auto;
     font-size: 22px;
-    /* 设置字体大小 */
     font-family: 'Arial', sans-serif;
-    /* 设置字体类型 */
     margin-right: 40px;
     /* border: solid #ff0000; */
   }
@@ -368,11 +321,9 @@
   .user-info {
     display: flex;
     margin-left: auto;
-    /* 将此元素推向右侧 */
     /* border: solid #ff0000; */
   }
 
-  /*下方显示*/
   .main-container {
     display: flex;
     /* 下方容器固定高度 */
@@ -398,15 +349,6 @@
     border-radius: 0 0 10px 0;
     /* border: solid #ff0000; */
   }
-
-  /* 左侧导航栏具体样式设置 */
-  /* .sidebar {
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
-    border: 1px solid #ccc;  
-    background-color: #819caf;
-    border: solid #ff0000;
-  } */
 
   .nav-list {
     display: flex;
@@ -443,7 +385,8 @@
     width: 30px;
     border-radius: 20px;
   }
-  .personalData{
+
+  .personalData {
     margin-top: 5px;
     margin-left: 10px;
   }

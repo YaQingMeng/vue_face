@@ -7,39 +7,12 @@
         <div class="photo-info">
           <p>{{ photo.status }}</p>
           <p>{{ photo.time }}</p>
-          <el-button type="success" class="buttons" @click="showDialog(photo)">查看</el-button>
         </div>
       </div>
     </div>
     <el-pagination style="margin-top: 20px;" background layout="prev, pager, next" :current-page="currentPage"
       @current-change="handlePageChange" :page-size="pageSize" :total="photos.length" />
   </div>
-
-  <el-dialog title="编辑该人脸" v-model="dialogVisible" width="30%">
-    <el-form :model="selectedPhoto">
-      <el-form-item label="姓名">
-        <el-input v-model="selectedPhoto.name"></el-input>
-      </el-form-item>
-      <el-form-item label="学号">
-        <el-input v-model="selectedPhoto.id"></el-input>
-      </el-form-item>
-      <el-form-item label="状态">
-        <el-input v-model="selectedPhoto.status" disabled></el-input>
-      </el-form-item>
-      <el-form-item label="刷脸时间">
-        <el-input v-model="selectedPhoto.time" disabled></el-input>
-      </el-form-item>
-      <el-form-item label="操作">
-        <el-checkbox v-model="addToDatabase">加入数据库</el-checkbox>
-      </el-form-item>
-    </el-form>
-    <template #footer>
-      <div class="dialog-footer">
-        <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="savePermissions">保存</el-button>
-      </div>
-    </template>
-  </el-dialog>
 </template>
 
 <script>
@@ -60,7 +33,6 @@
         ],
         currentPage: 1,
         pageSize: 6, // Number of photos per page
-        dialogVisible: false,
         selectedPhoto: null,
         addToDatabase: false,
       };
@@ -75,24 +47,6 @@
     methods: {
       handlePageChange(page) {
         this.currentPage = page;
-      },
-      showDialog(photo) {
-        this.selectedPhoto = photo;
-        this.dialogVisible = true;
-      },
-      savePermissions() {
-        if (this.addToDatabase) {
-          // Implement logic to save to database (mocked here)
-          console.log(`Saving permissions for ${this.selectedPhoto.name} (${this.selectedPhoto.id})`);
-          console.log('Add to database:', this.addToDatabase);
-          // Reset selectedPhoto and close dialog
-          this.selectedPhoto = null;
-          this.addToDatabase = false;
-          this.dialogVisible = false;
-        } else {
-          // Just close the dialog
-          this.dialogVisible = false;
-        }
       },
     },
   };

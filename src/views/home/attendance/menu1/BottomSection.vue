@@ -8,7 +8,7 @@
     </el-container>
 
     <el-table :data="paginatedData" class="paginatedData">
-      <el-table-column prop="date" label="时间" width="150" />
+      <el-table-column prop="date" label="时间" width="250" />
       <el-table-column prop="name" label="姓名" width="150" />
       <el-table-column prop="id" label="学号" width="150" />
       <el-table-column prop="department" label="学院" width="150" />
@@ -22,8 +22,8 @@
       </el-table-column>
       <el-table-column label="详情">
         <template #default="scope">
-          <el-button type="primary" size="mini" @click="handleQuery(scope.row)">详情</el-button>
-          <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button type="primary" size="default" @click="handleQuery(scope.row)">详情</el-button>
+          <el-button type="danger" size="default" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -45,7 +45,7 @@
         <el-form-item label="状态">
           <el-input v-model="currentRecord.status" disabled></el-input>
         </el-form-item>
-        <el-form-item label="刷脸详情">
+        <el-form-item label="刷脸图片">
           <img :src="currentRecord.photoPath" style="width: 100px; height: 100px;">
         </el-form-item>
       </el-form>
@@ -76,24 +76,14 @@
 
 <script>
   import { ElMessage, ElMessageBox } from 'element-plus';
-  
+  import axios from 'axios';
+
   export default {
     name: 'RightSection',
     data() {
       return {
-        tableData: [
-          { date: '2016-05-03', name: 'Tom', id: '20210000', department: '计算机学院', dormid: '341', status: '晚归', photoPath: '' },
-          { date: '2016-05-03', name: 'Tom', id: '20210000', department: '计算机学院', dormid: '341', status: '正常', photoPath: '' },
-          { date: '2016-05-03', name: 'Tom', id: '20210000', department: '计算机学院', dormid: '341', status: '正常', photoPath: '' },
-          { date: '2016-05-03', name: 'Tom', id: '20210000', department: '计算机学院', dormid: '341', status: '正常', photoPath: '' },
-          { date: '2016-05-03', name: 'Tom', id: '20210000', department: '计算机学院', dormid: '341', status: '正常', photoPath: '' },
-          { date: '2016-05-03', name: 'Tom', id: '20210000', department: '计算机学院', dormid: '341', status: '正常', photoPath: '' },
-          { date: '2016-05-03', name: 'Tom', id: '20210000', department: '计算机学院', dormid: '341', status: '正常', photoPath: '' },
-          { date: '2016-05-03', name: 'Tom', id: '20210000', department: '计算机学院', dormid: '341', status: '正常', photoPath: '' },
-          { date: '2016-05-03', name: 'Tom', id: '20210000', department: '计算机学院', dormid: '341', status: '正常', photoPath: '' },
-          { date: '2016-05-03', name: 'Tom', id: '20210000', department: '计算机学院', dormid: '341', status: '正常', photoPath: '' },
-          // More data here...
-        ],
+        queryTableData: '',
+        tableData: '',
         currentPage: 1,
         pageSize: 9,
         dialogVisible: false,
@@ -117,16 +107,40 @@
         return this.tableData.slice(start, end);
       },
     },
+
+    created() {
+      this.fetchTableData();
+    },
+
     methods: {
+      // 获取考勤数据
+      async fetchTableData() {
+        const queryTableData = localStorage.getItem('queryTableData');
+        if (queryTableData) {
+          try {
+            this.tableData = JSON.parse(queryTableData); // 解析为对象
+            console.log("查询取出数据：", this.tableData);
+          } catch (e) {
+            console.error('Error parsing tableData data:', e);
+          }
+        }
+        await this.sleep(1000);
+        this.fetchTableData();
+      },
+      sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      },
+
       handlePageChange(page) {
         this.currentPage = page;
       },
+      // 详情
       handleQuery(row) {
         try {
-          this.currentRecord = { ...row, info: '固定刷脸详细信息' };
+          this.currentRecord = { ...row };
           this.dialogVisible = true;
         } catch (error) {
-          console.error('Error in handleQuery:', error);
+          ElMessage.error('获取详情失败');
         }
       },
       handleDelete(row) {
@@ -138,15 +152,34 @@
           ElMessage.error('删除记录时出错');
         }
       },
-      handleExportAllData() {
+      // 导出全部考勤数据
+      async handleExportAllData() {
         try {
           ElMessageBox.confirm('确认导出全部考勤记录？', '提醒', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'info',
-          }).then(() => {
-            // 执行导出操作
-            ElMessage.success('考勤记录导出成功');
+          }).then(async () => {
+            try {
+              // 发送 POST 请求到后端接口
+              const response = await axios.post('http://192.168.1.207:5000/all_export', {}, {
+                responseType: 'blob' // 期待从服务器返回的响应类型
+              });
+
+              const url = window.URL.createObjectURL(new Blob([response.data]));
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = `all_attendance_records.pdf`;
+              document.body.appendChild(a);
+              a.click();
+              window.URL.revokeObjectURL(url);
+              document.body.removeChild(a);
+
+              ElMessage.success('考勤记录导出成功');
+            } catch (error) {
+              console.error('Error in handleExportAllData axios:', error);
+              ElMessage.error('导出考勤记录时出错');
+            }
           }).catch(() => {
             ElMessage.info('已取消导出');
           });
@@ -155,9 +188,11 @@
           ElMessage.error('导出考勤记录时出错');
         }
       },
+
       handleExportPersonalData() {
         this.exportPersonalDialogVisible = true;
       },
+      // 导出个人考勤数据
       async handleExportPersonal() {
         try {
           // 校验学号是否输入
@@ -165,52 +200,47 @@
             ElMessage.error('请输入学号');
             return;
           }
-  
+
           // 根据学号过滤数据
           const personalData = this.tableData.filter(item => item.id === this.exportPersonalId);
           if (personalData.length === 0) {
             ElMessage.error('未找到该学号的记录');
             return;
           }
-  
-          ElMessageBox.confirm('确认导出该学号的考勤记录？', '提醒', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'info',
-          }).then(async () => {
-            try {
-              // 发送 POST 请求到后端接口
-              const response = await fetch('http://192.168.1.207:5000/single_export', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ id: this.exportPersonalId }),
-              });
-              if (!response.ok) {
-                throw new Error('Network response was not ok');
-              }
-  
-              const data = await response.json();
-              console.log(data)
-              ElMessage.success('考勤记录导出成功');
-              this.exportPersonalDialogVisible = false;
-            } catch (error) {
-              console.error('Error in handleExportPersonal fetch:', error);
-              ElMessage.error('导出考勤记录时出错');
-            }
-          }).catch(() => {
-            ElMessage.info('已取消导出');
-          });
+
+          try {
+            // 发送 POST 请求到后端接口
+            const response = await axios.post('http://192.168.1.207:5000/single_export', {
+              id: this.exportPersonalId
+            }, {
+              responseType: 'blob' // 期待从服务器返回的响应类型
+            });
+
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${this.exportPersonalId}_attendance_record.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+
+            ElMessage.success('考勤记录导出成功');
+            this.exportPersonalDialogVisible = false;
+          } catch (error) {
+            console.error('Error in handleExportPersonal axios:', error);
+            ElMessage.error('导出考勤记录时出错');
+          }
         } catch (error) {
           console.error('Error in handleExportPersonal:', error);
           ElMessage.error('导出考勤记录时出错');
         }
-      },
+      }
     },
   };
-  </script>
-  
+</script>
+
+
 
 
 <style scoped>

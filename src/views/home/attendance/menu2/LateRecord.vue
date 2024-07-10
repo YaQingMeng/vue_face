@@ -2,8 +2,8 @@
   <div class="right-section-content">
 
     <el-container class="titles">
-      <h3>刷脸记录</h3>
-      <el-button type="success" round @click="handleExport" class="action-button">导出考勤数据</el-button>
+      <h3>晚归记录</h3>
+      <el-button type="success" round @click="handleExport" class="action-button">导出晚归数据</el-button>
     </el-container>
 
     <el-table :data="paginatedData" stripe class="full-width-table">
@@ -12,8 +12,8 @@
       <el-table-column prop="id" label="学号" />
       <el-table-column label="详情">
         <template #default="scope">
-          <el-button type="primary" size="mini" @click="handleQuery(scope.row)">详情</el-button>
-          <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button type="primary" size="default" @click="handleQuery(scope.row)">详情</el-button>
+          <el-button type="danger" size="default" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
