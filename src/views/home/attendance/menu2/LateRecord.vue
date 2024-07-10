@@ -143,17 +143,18 @@ export default defineComponent({
 <style scoped>
   .right-section-content {
     display: flex;
-    flex: 1 1 auto;
+    flex: 1 0 auto;
     flex-direction: column;
     align-items: center;
-    /* border: solid #ff0000;    */
+
+
+    border-radius: 10px;
+    padding: 10px;
   }
 
-  .full-width-table {
+  /* .full-width-table {
     width: 100%;
-
-    /* border: solid #ff0000; */
-  }
+  } */
 
   .titles {
     flex: 0 1 auto;

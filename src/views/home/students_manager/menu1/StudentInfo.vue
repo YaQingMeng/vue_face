@@ -19,7 +19,7 @@
         <el-table-column prop="dormid" label="宿舍号" width="180" />
         <el-table-column label="状态">
           <template #default="scope">
-            <el-tag :type="scope.row.status === '在寝' ? 'success' : 'danger'">
+            <el-tag :type="scope.row.status === '在寝' || scope.row.status === '正常' ? 'success' : 'danger'">
               {{ scope.row.status }}
             </el-tag>
           </template>
@@ -95,17 +95,17 @@
       return {
         searchQuery: '',
         tableData: [
-          { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
-          { id: '20210001', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
-          { id: '20210002', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
-          { id: '20210003', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
-          { id: '20210005', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
-          { id: '202100006', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
-          { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
-          { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
-          { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
-          { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
-          { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' },
+          { id: '20210000', name: 'aa', department: '计算机学院', dormid: '341', status: '晚归', phone:'123', photoPath:'/person.png'},
+          { id: '20210001', name: 'bb', department: '计算机学院', dormid: '341', status: '在寝', phone:'123', photoPath:'/person.png' },
+          { id: '20210002', name: '张三', department: '计算机学院', dormid: '341', status: '在寝', phone:'123', photoPath:'/person.png' },
+          { id: '20210003', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' , phone:'123', photoPath:'/person.png'},
+          { id: '20210005', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' , phone:'123', photoPath:'/person.png'},
+          { id: '202100006', name: '张三', department: '计算机学院', dormid: '341', status: '在寝', phone:'123', photoPath:'/person.png' },
+          { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝', phone:'123', photoPath:'/person.png' },
+          { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' , phone:'123', photoPath:'/person.png'},
+          { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' , phone:'123', photoPath:'/person.png'},
+          { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' , phone:'123', photoPath:'/person.png'},
+          { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' , phone:'123', photoPath:'/person.png'},
         ],
         currentPage: 1,
         pageSize: 7,
@@ -133,31 +133,37 @@
       },
     },
     created() {
-      this.fetchTableData();
+
     },
+    // 获取学生基本信息
     methods: {
-      handleSearch() {
-        const searchResult = '查询结果: 这是固定的结果';
-        // 弹出通知
-        ElNotification({
-          title: '搜索结果',
-          message: searchResult,
-          type: 'success',
-          duration: 3000, // 通知显示时长，单位为毫秒
-        });
-
-        console.log('搜索内容:', this.searchQuery);
-        console.log('搜索结果:', searchResult);
-      },
-
-      // 获取学生基本信息
-      async fetchTableData() {
+      async handleSearch() {
         try {
-          // const response = await axios.get('http://your-backend-url/students_info');
-          // this.tableData = response.data;
+          const response = await axios.post('http://192.168.1.207:5000/pass_logs', {
+            id: this.searchQuery,
+          });
+          this.tableData = response.data.table_data;
+
+          let searchResult = '';
+
+          if (this.searchQuery) {
+            searchResult = `查询到学号 ${this.searchQuery} 的信息`;
+            // 弹出通知
+            ElNotification({
+              title: '搜索结果',
+              message: searchResult,
+              type: 'success',
+              duration: 3000, // 通知显示时长，单位为毫秒
+            });
+          }
         } catch (error) {
-          console.error('获取学生信息列表失败:', error);
-          ElMessage.error('获取学生信息列表失败');
+          ElNotification({
+            title: '错误',
+            message: '查询失败，请稍后重试',
+            type: 'error',
+            duration: 3000,
+          });
+          console.error('查询失败:', error);
         }
       },
 
@@ -246,7 +252,6 @@
     display: flex;
     align-items: center;
     width: 400px;
-
   }
 
   .bottom-section-content {

@@ -1,4 +1,3 @@
-// src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../views/home/HomePage.vue';
 import LoginPage from '../views/login/LoginPage.vue';
@@ -50,11 +49,11 @@ router.beforeEach((to, from, next) => {
         query: { redirect: to.fullPath }
       });
     } else {
-      // 已经登录，继续导航
+      // 已经登录
       next();
     }
   } else {
-    // 这个路由不需要认证，继续导航
+    // 路由不需要认证
     next();
   }
 });

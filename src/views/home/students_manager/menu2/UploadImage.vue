@@ -9,11 +9,18 @@
         <el-form-item label="学号" prop="id">
           <el-input v-model="newUser.id"></el-input>
         </el-form-item>
+        <el-form-item label="专业" prop="department">
+          <el-input v-model="newUser.department"></el-input>
+        </el-form-item>
         <el-form-item label="宿舍号" prop="dormid">
           <el-input v-model="newUser.dormid"></el-input>
         </el-form-item>
         <el-form-item label="状态" prop="status">
-          <el-input v-model="newUser.status"></el-input>
+          <el-select v-model="newUser.status" placeholder="请选择状态">
+            <el-option label="在读" value="在读"></el-option>
+            <el-option label="毕业" value="毕业"></el-option>
+            <el-option label="休学" value="休学"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="手机号" prop="phone">
           <el-input v-model="newUser.phone"></el-input>
@@ -21,7 +28,7 @@
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="newUser.email"></el-input>
         </el-form-item>
-        <el-form-item label="人脸照片" prop="photo">
+        <el-form-item label="人脸照片" prop="photoFile">
           <img v-if="newUser.photoPath" :src="newUser.photoPath"
             style="width: 100px; height: 100px; margin-bottom: 10px;">
           <input type="file" ref="fileInput" @change="onFileChange">
@@ -44,6 +51,7 @@
         newUser: {
           name: '',
           id: '',
+          department: '',
           dormid: '',
           status: '',
           phone: '',
@@ -54,11 +62,12 @@
         rules: {
           name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
           id: [{ required: true, message: '请输入学号', trigger: 'blur' }],
+          department: [{ required: true, message: '请输入专业', trigger: 'blur' }],
           dormid: [{ required: true, message: '请输入宿舍号', trigger: 'blur' }],
-          status: [{ required: true, message: '请输入状态', trigger: 'blur' }],
+          status: [{ required: true, message: '请选择状态', trigger: 'change' }],
           phone: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
-          email: [{ required: true, message: '请输入邮箱', trigger: 'blur' }],
-          photo: [{ required: true, message: '请上传人脸照片', trigger: 'change' }]
+          email: [{ required: true, type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }],
+          photoFile: [{ required: true, message: '请上传人脸照片', trigger: 'change' }]
         }
       };
     },
@@ -66,6 +75,9 @@
       onFileChange(event) {
         const file = event.target.files[0];
         if (file) {
+          if (this.newUser.photoPath) {
+            URL.revokeObjectURL(this.newUser.photoPath);
+          }
           this.newUser.photoFile = file;
           this.newUser.photoPath = URL.createObjectURL(file);
         }
@@ -76,6 +88,7 @@
             const formData = new FormData();
             formData.append('name', this.newUser.name);
             formData.append('id', this.newUser.id);
+            formData.append('department', this.newUser.department);
             formData.append('dormid', this.newUser.dormid);
             formData.append('status', this.newUser.status);
             formData.append('phone', this.newUser.phone);
@@ -101,6 +114,9 @@
       },
       resetForm() {
         this.$refs.newUserForm.resetFields();
+        if (this.newUser.photoPath) {
+          URL.revokeObjectURL(this.newUser.photoPath);
+        }
         this.newUser.photoPath = '';
         this.newUser.photoFile = null;
         this.$refs.fileInput.value = '';
@@ -108,6 +124,7 @@
     }
   };
 </script>
+
 
 <style scoped>
   .new-user-page {
