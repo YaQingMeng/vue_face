@@ -4,20 +4,33 @@
 
 <script>
   import * as echarts from 'echarts';
+  import axios from 'axios';
 
   export default {
     name: 'BottomSection',
-    mounted() {
-      this.initLineChart();
+    data() {
+      return {
+        data_1: '',
+        data_2: '',
+      }
+    },
+    created() {
+      this.fetchChartData();
     },
     methods: {
+      async fetchChartData() {
+        const response = await axios.get("http://192.168.1.207:5000/flow_change");
+        this.data_1 = response.data.array1;
+        this.data_2 = response.data.array2;
+        this.initLineChart();
+      },
       initLineChart() {
         var chartDom = document.getElementById('line-chart');
         var myChart = echarts.init(chartDom);
         var option;
         option = {
           title: {
-            text: '人流量图',
+            text: '学生流量图',
             left: 'center'
           },
           tooltip: {
@@ -32,10 +45,14 @@
               saveAsImage: {}
             }
           },
+          legend: {
+            data: ['出寝人数', '入寝人数'],
+            top: 'bottom'
+          },
           xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ['00:00', '03:00', '05:00', '08:00', '11:00', '13:00', '16:00', '19:00', '21:00', '00:00']
+            data: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00', '00:00']
           },
           yAxis: {
             type: 'value',
@@ -46,53 +63,23 @@
               snap: true
             }
           },
-          visualMap: {
-            show: false,
-            dimension: 0,
-            pieces: [
-              {
-                gt: 0,
-                lte: 50,
-                color: 'green'
-              },
-              {
-                gt: 50,
-                lte: 1000,
-                color: 'red'
-              },
-            ],
-          },
-
           series: [
             {
-              name: '人数',
+              name: '出寝人数',
               type: 'line',
               smooth: true,
-              data: [0, 0, 0, 260, 100, 200, 100, 300, 260, 50],
-              markArea: {
-                itemStyle: {
-                  color: 'rgba(255, 173, 177, 0.4)'
-                },
-                data: [
-                  [
-                    {
-                      name: 'Morning Peak',
-                      xAxis: '07:30'
-                    },
-                    {
-                      xAxis: '10:00'
-                    }
-                  ],
-                  [
-                    {
-                      name: 'Evening Peak',
-                      xAxis: '17:30'
-                    },
-                    {
-                      xAxis: '21:15'
-                    }
-                  ]
-                ]
+              data: this.data_1,
+              itemStyle: {
+                color: 'green'
+              }
+            },
+            {
+              name: '入寝人数',
+              type: 'line',
+              smooth: true,
+              data: this.data_2,
+              itemStyle: {
+                color: 'blue'
               }
             }
           ]
@@ -104,9 +91,9 @@
   };
 </script>
 
+
 <style scoped>
   .chart1 {
     flex: 1 1 auto;
-    /* border: solid #ff0000; */
   }
 </style>

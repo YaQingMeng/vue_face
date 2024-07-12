@@ -3,7 +3,7 @@
     <div class="title">异常识别记录</div>
     <div class="gallery">
       <div v-for="(photo, index) in paginatedPhotos" :key="index" class="photo-item">
-        <img :src="photo.url" alt="异常人脸照片">
+        <img :src="'http://192.168.1.207:5000/error_images/' + photo.error_photo_path" alt="异常人脸照片" style="width: 110px; height: 130px;">
         <div class="photo-info">
           <p>{{ photo.status }}</p>
           <p>{{ photo.time }}</p>
@@ -16,23 +16,23 @@
 </template>
 
 <script>
+  import axios from 'axios';
   export default {
+
     name: 'LeftSection',
     data() {
       return {
         photos: [
-          { url: '/login.jpg', status: '未识别', time: '2024-07-10 10:00:00' },
+          { url: 'person.png', status: '未识别', time: '2024-07-10 10:00:00' },
           { url: '/login.jpg', status: '未识别', time: '2024-07-10 11:00:00' },
           { url: '/login.jpg', status: '未识别', time: '2024-07-10 11:00:00' },
           { url: '/login.jpg', status: '未识别', time: '2024-07-10 11:00:00' },
           { url: '/login.jpg', status: '未识别', time: '2024-07-10 11:00:00' },
           { url: '/login.jpg', status: '未识别', time: '2024-07-10 11:00:00' },
           { url: '/login.jpg', status: '未识别', time: '2024-07-10 11:00:00' },
-          { url: '/login.jpg', status: '未识别', time: '2024-07-10 11:00:00' },
-          // Add more photos with details
         ],
         currentPage: 1,
-        pageSize: 6, // Number of photos per page
+        pageSize: 4,
         selectedPhoto: null,
         addToDatabase: false,
       };
@@ -44,7 +44,21 @@
         return this.photos.slice(start, end);
       },
     },
+    created() {
+      this.fetchTableData();
+    },
     methods: {
+      // 获取异常数据
+      async fetchTableData() {
+        try {
+          const response = await axios.get('http://192.168.1.207:5000/error_log');
+          this.photos = response.data.error_data;
+          console.log("异常图片",this.photos)
+
+        } catch (error) {
+          console.error('Error fetching photos:', error);
+        }
+      },
       handlePageChange(page) {
         this.currentPage = page;
       },

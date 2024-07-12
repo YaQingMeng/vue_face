@@ -13,13 +13,13 @@
     <div class="bottom-section-content">
       <h3>信息列表</h3>
       <el-table :data="paginatedData" stripe class="student-container">
-        <el-table-column prop="name" label="姓名" width="180" />
-        <el-table-column prop="id" label="学号" width="180" />
+        <el-table-column prop="name" label="姓名" width="150" />
+        <el-table-column prop="sid" label="学号" width="150" />
         <el-table-column prop="department" label="专业" width="200" />
         <el-table-column prop="dormid" label="宿舍号" width="180" />
         <el-table-column label="状态">
           <template #default="scope">
-            <el-tag :type="scope.row.status === '在寝' || scope.row.status === '正常' ? 'success' : 'danger'">
+            <el-tag :type="scope.row.status === '在寝' ? 'success' : 'danger'">
               {{ scope.row.status }}
             </el-tag>
           </template>
@@ -28,7 +28,7 @@
           <template #default="scope">
             <el-button type="primary" size="default" @click="handleQuery(scope.row)">详情</el-button>
             <el-button type="danger" size="default" @click="confirmDelete(scope.row)">删除</el-button>
-            <el-button type="success" size="default" @click="handleUpdate(scope.row)">编辑</el-button>
+            <el-button type="success" size="default" @click="handleUpdate(scope.row)">编辑人脸</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -43,7 +43,7 @@
             <el-input v-model="currentRecord1.name" disabled></el-input>
           </el-form-item>
           <el-form-item label="学号">
-            <el-input v-model="currentRecord1.id" disabled></el-input>
+            <el-input v-model="currentRecord1.sid" disabled></el-input>
           </el-form-item>
           <el-form-item label="宿舍号">
             <el-input v-model="currentRecord1.dormid" disabled></el-input>
@@ -51,14 +51,9 @@
           <el-form-item label="状态">
             <el-input v-model="currentRecord1.status" disabled></el-input>
           </el-form-item>
-          <el-form-item label="手机号">
-            <el-input v-model="currentRecord1.phone" disabled></el-input>
-          </el-form-item>
-          <el-form-item label="邮箱">
-            <el-input v-model="currentRecord1.email" disabled></el-input>
-          </el-form-item>
           <el-form-item label="人脸照片">
-            <img :src="currentRecord1.photoPath" style="width: 100px; height: 100px;">
+            <img :src="'http://192.168.1.207:5000/images/' + currentRecord1.img_path"
+              style="width: 100px; height: 100px;">
           </el-form-item>
         </el-form>
         <template #footer>
@@ -72,7 +67,8 @@
       <el-dialog title="编辑人脸信息" v-model="dialogVisible2" width="30%">
         <el-form :model="currentRecord2">
           <el-form-item label="人脸照片">
-            <img :src="currentRecord2.photoPath" style="width: 100px; height: 100px;">
+            <img :src="previewUrl || ('http://192.168.1.207:5000/images/' + currentRecord2.img_path)"
+              style="width: 100px; height: 100px;">
           </el-form-item>
         </el-form>
         <template #footer>
@@ -81,7 +77,6 @@
         </template>
       </el-dialog>
     </div>
-
   </div>
 </template>
 
@@ -94,35 +89,23 @@
     data() {
       return {
         searchQuery: '',
-        tableData: [
-          { id: '20210000', name: 'aa', department: '计算机学院', dormid: '341', status: '晚归', phone:'123', photoPath:'/person.png'},
-          { id: '20210001', name: 'bb', department: '计算机学院', dormid: '341', status: '在寝', phone:'123', photoPath:'/person.png' },
-          { id: '20210002', name: '张三', department: '计算机学院', dormid: '341', status: '在寝', phone:'123', photoPath:'/person.png' },
-          { id: '20210003', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' , phone:'123', photoPath:'/person.png'},
-          { id: '20210005', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' , phone:'123', photoPath:'/person.png'},
-          { id: '202100006', name: '张三', department: '计算机学院', dormid: '341', status: '在寝', phone:'123', photoPath:'/person.png' },
-          { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝', phone:'123', photoPath:'/person.png' },
-          { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' , phone:'123', photoPath:'/person.png'},
-          { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' , phone:'123', photoPath:'/person.png'},
-          { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' , phone:'123', photoPath:'/person.png'},
-          { id: '20210000', name: '张三', department: '计算机学院', dormid: '341', status: '在寝' , phone:'123', photoPath:'/person.png'},
-        ],
+        tableData: [],
         currentPage: 1,
         pageSize: 7,
         dialogVisible1: false,
         dialogVisible2: false,
         currentRecord1: {
           name: '',
-          id: '',
+          sid: '',
           dormid: '',
           status: '',
-          phone: '',
-          email: '',
-          photoPath: ''
+          img_path: ''
         },
         currentRecord2: {
-          photoPath: ''
+          img_path: ''
         },
+        previewUrl: '',
+        selectedFile: null,
       };
     },
     computed: {
@@ -133,16 +116,17 @@
       },
     },
     created() {
-
+      this.handleSearch()
     },
     // 获取学生基本信息
     methods: {
       async handleSearch() {
         try {
-          const response = await axios.post('http://192.168.1.207:5000/pass_logs', {
-            id: this.searchQuery,
+          const response = await axios.post('http://192.168.1.207:5000/stu_info', {
+            sid: this.searchQuery,
           });
-          this.tableData = response.data.table_data;
+
+          this.tableData = response.data.stu_data;
 
           let searchResult = '';
 
@@ -163,7 +147,7 @@
             type: 'error',
             duration: 3000,
           });
-          console.error('查询失败:', error);
+          ElMessage.error('查询失败:', error);
         }
       },
 
@@ -204,21 +188,42 @@
       // 更新学生信息
       async handleUpdate(row) {
         try {
-          const response = await axios.get(`http://your-backend-url/students_info/${row.id}`);
-          const studentData = response.data;
-          this.currentRecord2 = {
-            ...row,
-            phone: studentData.phone,
-            email: studentData.email,
-            photoPath: studentData.photoPath
-          };
+          this.currentRecord2 = { ...row, };
           this.dialogVisible2 = true;
         } catch (error) {
-          console.error('获取学生信息失败:', error);
           ElMessage.error('获取学生信息失败');
         }
       },
 
+      // 上传图片
+      async uploadImage() {
+        if (!this.selectedFile) {
+          ElMessage.error('请先选择文件');
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', this.selectedFile);
+        formData.append('sid', this.currentRecord2.sid);
+
+        try {
+          const response = await axios.post('http://192.168.1.207:5000/update_face', formData, {
+            // headers: {
+            //   'Content-Type': 'multipart/form-data'
+            // }
+          });
+
+          if (response.data.code == 200) {
+            ElMessage.success('图片上传成功');
+            this.dialogVisible2 = false;
+            this.handleSearch(); // 刷新表格数据
+          } else {
+            ElMessage.error('图片上传失败');
+          }
+        } catch (error) {
+          ElMessage.error('上传过程中出错');
+        }
+      },
       onFileChange(event) {
         this.selectedFile = event.target.files[0];
         if (this.selectedFile) {
@@ -238,6 +243,7 @@
 
   .top-section-content {
     display: flex;
+    flex: 0 0 auto;
     height: 100px;
     margin-bottom: 10px;
     background-color: #f5f5f5;

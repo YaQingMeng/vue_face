@@ -47,7 +47,7 @@
 
   .left-section {
     display: flex;
-    width: 600px;
+    width: 700px;
     /* background-color: #f5f5f5;     */
     border: 1px solid #ccc;
     border-radius: 10px;

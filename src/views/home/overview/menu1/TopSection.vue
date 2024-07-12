@@ -1,6 +1,6 @@
 <template>
   <div class="block text-center">
-    <el-carousel height="150px" :interval="4000" arrow="always">
+    <el-carousel height="200px" :interval="4000" arrow="always">
       <el-carousel-item v-for="(image, index) in images" :key="index">
         <img :src="image" class="carousel-image" />
       </el-carousel-item>
@@ -14,9 +14,9 @@
     data() {
       return {
         images: [
+          require('@/assets/images/image.png'),
           require('@/assets/images/image1.png'),
           require('@/assets/images/image2.png'),
-          require('@/assets/images/image3.jpg'),
         ],
       };
     },

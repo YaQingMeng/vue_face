@@ -1,18 +1,13 @@
 <template>
-  <div class="left-section-content">
+  <div class="right-section-content">
     <div class="charts-container">
       <!-- 时间线分页展示 -->
-      <el-timeline style="max-width: 600px; margin-top: 20px;">
-        <el-timeline-item v-for="(item, index) in paginatedItems" :key="index" :timestamp="item.timestamp"
-          placement="top">
-          <el-card class="items">
-            <h4>{{ item.title }}</h4>
-            <p>{{ item.description }}</p>
-          </el-card>
+      <el-timeline style="max-width: 500px;">
+        <el-timeline-item v-for="(item, index) in paginatedItems" :key="index"
+          :timestamp="`${item.time} ${item.sname} ${item.type} 寝室`" placement="top">
         </el-timeline-item>
       </el-timeline>
     </div>
-
     <!-- 分页控制器 -->
     <el-pagination @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize"
       layout="prev, pager, next" :total="timelineItems.length" background>
@@ -21,23 +16,65 @@
 </template>
 
 <script>
+  import axios from 'axios';
+
   export default {
-    name: 'LeftSection',
     data() {
       return {
-        timelineItems: [
-          { timestamp: '2023/6/20', title: 'Update Github template', description: 'Tom committed 2023/6/20 20:46' },
-          { timestamp: '2023/6/18', title: 'Update Github template', description: 'Tom committed 2023/6/18 20:46' },
-          { timestamp: '2023/6/15', title: 'Update Github template', description: 'Tom committed 2023/6/15 20:46' },
-          { timestamp: '2023/6/12', title: 'Update Github template', description: 'Tom committed 2023/6/12 20:46' },
-          { timestamp: '2023/6/10', title: 'Update Github template', description: 'Tom committed 2023/6/10 20:46' },
-          { timestamp: '2023/6/5', title: 'Update Github template', description: 'Tom committed 2023/6/5 20:46' },
-          { timestamp: '2023/6/1', title: 'Update Github template', description: 'Tom committed 2023/6/1 20:46' }
-          // Add more timeline items as needed
-        ],
+        timelineItems: [],
         currentPage: 1,
-        pageSize: 2 // 每页显示的条目数
+        pageSize: 8,
+        intervalId: null,
       };
+    },
+    created() {
+      this.startFetchingTimelineItems();
+    },
+    beforeUnmount() {
+      this.stopFetchingTimelineItems();
+    },
+    methods: {
+      // sleep(ms) {
+      //   return new Promise(resolve => setTimeout(resolve, ms));
+      // },
+      // 从后端获取全部出勤记录
+      async fetchTimelineItems() {
+        try {
+          const response = await axios.get('http://192.168.1.207:5000/current_logs');
+          this.timelineItems = response.data.table_data;
+          console.log(this.timelineItems);
+        } catch (error) {
+          console.error('Error fetching timeline items:', error);
+        }
+      },
+      // 启动定时获取
+      startFetchingTimelineItems() {
+        this.intervalId = setInterval(() => {
+          this.fetchTimelineItems();
+        }, 1500);
+      },
+      // 停止定时获取
+      stopFetchingTimelineItems() {
+        if (this.intervalId) {
+          clearInterval(this.intervalId);
+          this.intervalId = null;
+        }
+      },
+      // 实现滚动刷新
+      refreshTimeline() {
+        this.fetchTimelineItems(); // 获取最新数据
+        // 滚动到顶部
+        this.$nextTick(() => {
+          const container = document.querySelector('.charts-container');
+          if (container) {
+            container.scrollTop = 0; // 滚动到顶部
+          }
+        });
+      },
+      // 处理分页器当前页变更事件
+      handleCurrentChange(page) {
+        this.currentPage = page;
+      },
     },
     computed: {
       // 计算分页后的时间线条目
@@ -47,17 +84,14 @@
         return this.timelineItems.slice(startIndex, endIndex);
       }
     },
-    methods: {
-      // 处理分页器当前页变更事件
-      handleCurrentChange(page) {
-        this.currentPage = page;
-      }
-    }
   };
 </script>
 
+
+
+
 <style>
-  .left-section-content {
+  .right-section-content {
     flex: auto;
     display: flex;
     padding: 10px;
@@ -74,8 +108,6 @@
     width: 100%;
     /* 让内容铺满整个宽度 */
   }
-
-
 
   .el-pagination {
     /* border: solid #ff0000; */

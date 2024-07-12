@@ -5,7 +5,7 @@
 
 <script>
   export default {
-    name: 'RightSection',
+    name: 'TopSection',
   };
 </script>
 

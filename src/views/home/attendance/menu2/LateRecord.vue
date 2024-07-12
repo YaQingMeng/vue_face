@@ -7,158 +7,117 @@
     </el-container>
 
     <el-table :data="paginatedData" stripe class="full-width-table">
-      <el-table-column prop="date" label="时间" />
+      <el-table-column prop="time" label="时间" />
       <el-table-column prop="name" label="姓名" />
-      <el-table-column prop="id" label="学号" />
-      <el-table-column label="详情">
-        <template #default="scope">
-          <el-button type="primary" size="default" @click="handleQuery(scope.row)">详情</el-button>
-          <el-button type="danger" size="default" @click="handleDelete(scope.row)">删除</el-button>
-        </template>
-      </el-table-column>
+      <el-table-column prop="sid" label="学号" />
     </el-table>
 
     <el-pagination style="margin-top: 20px;" background layout="prev, pager, next" :current-page="currentPage"
       @current-change="handlePageChange" :page-size="pageSize" :total="tableData.length" />
 
-    <el-dialog title="刷脸信息" v-model="dialogVisible" width="30%">
-      <el-form :model="currentRecord">
-        <el-form-item label="时间">
-          <el-input v-model="currentRecord.date" disabled></el-input>
-        </el-form-item>
-        <el-form-item label="姓名">
-          <el-input v-model="currentRecord.name" disabled></el-input>
-        </el-form-item>
-        <el-form-item label="学号">
-          <el-input v-model="currentRecord.id" disabled></el-input>
-        </el-form-item>
-        <el-form-item label="状态">
-          <el-input v-model="currentRecord.status" disabled></el-input>
-        </el-form-item>
-        <el-form-item label="刷脸详情">
-          <el-input v-model="currentRecord.info" disabled></el-input>
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <div class="dialog-footer">
-          <el-button @click="dialogVisible = false">关闭</el-button>
-        </div>
-      </template>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue';
-import { ElMessage, ElMessageBox } from 'element-plus';
+  import { defineComponent } from 'vue';
+  import { ElMessage, ElMessageBox } from 'element-plus';
+  import axios from 'axios';
 
-export default defineComponent({
-  name: 'RightSection',
-  data() {
-    return {
-      tableData: [
-        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late' },
-        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late' },
-        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late' },
-        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late' },
-        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late' },
-        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late' },
-        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late' },
-        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late' },
-        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late' },
-        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late' },
-        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late' },
-        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late' },
-        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late' },
-        { date: '2016-05-03', name: 'Tom', id: '111', status: 'Late' },
-        // More data here...
-      ],
-      currentPage: 1,
-      pageSize: 10,
-      dialogVisible: false,
-      currentRecord: {
-        date: '',
-        name: '',
-        id: '',
-        status: '',
-        info: '',
+  export default defineComponent({
+    name: 'RightSection',
+    data() {
+      return {
+        tableData: [],
+        currentPage: 1,
+        pageSize: 11,
+      };
+    },
+    computed: {
+      paginatedData() {
+        const start = (this.currentPage - 1) * this.pageSize;
+        const end = this.currentPage * this.pageSize;
+        return this.tableData.slice(start, end);
       },
-    };
-  },
-  computed: {
-    paginatedData() {
-      const start = (this.currentPage - 1) * this.pageSize;
-      const end = this.currentPage * this.pageSize;
-      return this.tableData.slice(start, end);
     },
-  },
-  methods: {
-    handlePageChange(page) {
-      this.currentPage = page;
+    created() {
+      this.fetchTableData();
     },
-    handleQuery(row) {
-      try {
-        this.currentRecord = { ...row, info: '固定刷脸详细信息' };
-        this.dialogVisible = true;
-      } catch (error) {
-        console.error('Error in handleQuery:', error);
-        ElMessage.error('查询记录时出错');
-      }
-    },
-    handleDelete(row) {
-      try {
-        this.tableData = this.tableData.filter(item => item !== row);
-        ElMessage.success('记录已删除');
-        // 处理删除后的分页问题
-        if (this.currentPage > 1 && this.paginatedData.length === 0) {
-          this.currentPage--;
+    methods: {
+      // 获取晚归记录
+      fetchTableData() {
+        const queryTableData = localStorage.getItem('queryTableData');
+        if (queryTableData) {
+          try {
+            // 解析为对象
+            const parsedData = JSON.parse(queryTableData);
+            console.log("查询取出数据：", parsedData);
+
+            // 过滤出 status 为 '晚归' 的数据
+            this.tableData = parsedData.filter(item => item.status === '晚归');
+            console.log("过滤后的数据：", this.tableData);
+          } catch (e) {
+            console.error('Error parsing tableData data:', e);
+          }
         }
-      } catch (error) {
-        console.error('Error in handleDelete:', error);
-        ElMessage.error('删除记录时出错');
-      }
-    },
-    handleExport() {
-      try {
-        ElMessageBox.confirm('确认导出考勤记录？', '提醒', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'info',
-        }).then(() => {
-          // 执行导出操作
-          ElMessage.success('考勤记录导出成功');
-        }).catch(() => {
+      },
+
+      // 导出晚归记录
+      async handleExport() {
+        try {
+          const confirmed = await ElMessageBox.confirm('确认导出晚归考勤记录？', '提醒', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'info',
+          });
+
+          if (confirmed) {
+            try {
+              // 发送 POST 请求到后端接口
+              const response = await axios.post('http://192.168.1.207:5000/all_export', {}, {
+                responseType: 'blob' // 期待从服务器返回的响应类型
+              });
+
+              const url = window.URL.createObjectURL(new Blob([response.data]));
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = 'all_attendance_records.pdf';
+              document.body.appendChild(a);
+              a.click();
+              window.URL.revokeObjectURL(url);
+              document.body.removeChild(a);
+
+              ElMessage.success('考勤记录导出成功');
+            } catch (error) {
+              ElMessage.error('导出晚归记录时出错');
+            }
+          }
+        } catch (error) {
           ElMessage.info('已取消导出');
-        });
-      } catch (error) {
-        console.error('Error in handleExport:', error);
-        ElMessage.error('导出考勤记录时出错');
-      }
+        }
+      },
+
+      // 翻页
+      handlePageChange(page) {
+        this.currentPage = page;
+      },
     },
-  },
-});
+  });
 </script>
 
 
 <style scoped>
   .right-section-content {
     display: flex;
-    flex: 1 0 auto;
+    flex: 1 1 auto;
     flex-direction: column;
     align-items: center;
-
-
+    background-color: #f5f5f5;
     border-radius: 10px;
     padding: 10px;
   }
 
-  /* .full-width-table {
-    width: 100%;
-  } */
-
   .titles {
     flex: 0 1 auto;
-    height: 50px;
     display: flex;
     align-items: center;
     /* border: solid #ff0000; */
@@ -166,6 +125,5 @@ export default defineComponent({
 
   .action-button {
     margin-left: 10px;
-    /* border: solid #ff0000; */
   }
 </style>
