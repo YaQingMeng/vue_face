@@ -18,19 +18,7 @@
     data() {
       return {
         searchQuery: '',
-        tableData: [
-          { date: '2016-05-03', name: 'Tom', id: '2', department: '计算机学院', dormid: '341', status: '晚归', photoPath: '/person.png' },
-          { date: '2016-05-03', name: 'Tom', id: '20210000', department: '计算机学院', dormid: '341', status: '正常', photoPath: '' },
-          { date: '2016-05-03', name: 'Tom', id: '20210000', department: '计算机学院', dormid: '341', status: '正常', photoPath: '' },
-          { date: '2016-05-03', name: 'Tom', id: '20210000', department: '计算机学院', dormid: '341', status: '正常', photoPath: '' },
-          { date: '2016-05-03', name: 'Tom', id: '20210000', department: '计算机学院', dormid: '341', status: '正常', photoPath: '' },
-          { date: '2016-05-03', name: 'Tom', id: '20210000', department: '计算机学院', dormid: '341', status: '正常', photoPath: '' },
-          { date: '2016-05-03', name: 'Tom', id: '20210000', department: '计算机学院', dormid: '341', status: '正常', photoPath: '' },
-          { date: '2016-05-03', name: 'Tom', id: '20210000', department: '计算机学院', dormid: '341', status: '正常', photoPath: '' },
-          { date: '2016-05-03', name: 'Tom', id: '20210000', department: '计算机学院', dormid: '341', status: '正常', photoPath: '' },
-          { date: '2016-05-03', name: 'Tom', id: '20210000', department: '计算机学院', dormid: '341', status: '正常', photoPath: '' },
-          // More data here...
-        ],
+        tableData: [],
       };
     },
     created() {

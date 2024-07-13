@@ -80,7 +80,7 @@
             <el-input v-model="currentRecord.type" disabled></el-input>
           </el-form-item>
           <el-form-item label="刷脸图片">
-            <img :src="'http://192.168.1.207:5000/images/' + currentRecord.log_photo_path"
+            <img :src="'http://192.168.1.207:5000/error_images/' + currentRecord.log_photo_path"
               style="width: 100px; height: 115px;">
           </el-form-item>
         </el-form>
