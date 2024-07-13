@@ -197,7 +197,7 @@
           <span>{{ user.username }}</span>
         </el-form-item>
         <el-form-item label="电话">
-          <span>{{ user.photo_number }}</span>
+          <span>{{ user.phone_number }}</span>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -236,7 +236,7 @@
         user: {
           username: '',
           password: '',
-          errorMessage: '',
+          phone_number: '',
           is_login: '',
         },
         dialogVisible1: false,

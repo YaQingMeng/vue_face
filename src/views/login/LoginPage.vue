@@ -60,11 +60,10 @@
             username: this.userinfo.username,
             password: this.userinfo.password,
           });
-          console.log(response);
 
           if (response.data.code == 200) {
-            // 登录成功，存储用户信息
             this.userinfo.is_login = 1;
+            this.userinfo.phone_number = response.data.phone_number;
             localStorage.setItem("userinfo", JSON.stringify(this.userinfo))
             console.log('result', localStorage.getItem('userinfo'));
             // 重定向到主页

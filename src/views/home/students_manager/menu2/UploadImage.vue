@@ -35,7 +35,7 @@
       return {
         newUser: {
           name: '',
-          id: '20210001',
+          id: '',
           department: '',
           dormid: '',
           photoPath: '',
@@ -50,12 +50,16 @@
       };
     },
     created() {
-      // axios.get('http://192.168.1.207:5000/stu_info')
-      //   .then(response => {
-      //     this.id = response.data.id;
-      //   });
+      this.fetchId()
     },
     methods: {
+      fetchId() {
+        axios.get('http://192.168.1.207:5000/next_sid')
+          .then(response => {
+            this.newUser.id = response.data.next_id;
+            console.log(this.newUser.id)
+          });
+      },
       onFileChange(event) {
         const file = event.target.files[0];
         if (file) {
@@ -71,13 +75,12 @@
           if (valid) {
             const formData = new FormData();
             formData.append('name', this.newUser.name);
-            formData.append('id', this.newUser.id);
+            formData.append('sid', this.newUser.id);
             formData.append('department', this.newUser.department);
             formData.append('dormid', this.newUser.dormid);
             if (this.newUser.photoFile) {
-              formData.append('photo', this.newUser.photoFile);
+              formData.append('file', this.newUser.photoFile);
             }
-
             axios.post('http://192.168.1.207:5000/register_stu', formData)
               .then(() => {
                 this.$message.success('用户新增成功');

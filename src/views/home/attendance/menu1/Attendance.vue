@@ -159,6 +159,16 @@
         try {
           const response = await axios.post('http://192.168.1.207:5000/pass_logs', { sid: this.searchQuery, });
 
+          if (response.data.code == 400) {
+            ElNotification({
+              title: '搜索结果',
+              message: `学号 ${this.searchQuery} 不在现有记录中`,
+              type: 'warning',
+              duration: 3000, // 通知显示时长，单位为毫秒
+            });
+            return false;
+          }
+
           this.tableData = response.data.table_data;
 
           let searchResult = '';
