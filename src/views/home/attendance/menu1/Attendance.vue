@@ -253,7 +253,7 @@
               const url = window.URL.createObjectURL(new Blob([response.data]));
               const a = document.createElement('a');
               a.href = url;
-              a.download = `all_attendance_records.pdf`;
+              a.download = `sample_total.pdf`;
               document.body.appendChild(a);
               a.click();
               window.URL.revokeObjectURL(url);

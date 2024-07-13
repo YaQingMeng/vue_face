@@ -73,14 +73,14 @@
           if (confirmed) {
             try {
               // 发送 POST 请求到后端接口
-              const response = await axios.post('http://192.168.1.207:5000/all_export', {}, {
+              const response = await axios.post('http://192.168.1.207:5000/late_export', {}, {
                 responseType: 'blob' // 期待从服务器返回的响应类型
               });
 
               const url = window.URL.createObjectURL(new Blob([response.data]));
               const a = document.createElement('a');
               a.href = url;
-              a.download = 'all_attendance_records.pdf';
+              a.download = 'late_records.pdf';
               document.body.appendChild(a);
               a.click();
               window.URL.revokeObjectURL(url);
